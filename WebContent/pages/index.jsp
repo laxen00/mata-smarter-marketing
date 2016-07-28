@@ -195,7 +195,7 @@ org.json.JSONObject
             <ul class="nav navbar-top-links">
                 <ul class="nav nav-tabs navbar-left">
 				  <li class="active"><a data-toggle="tab" href="#home" style="min-height:60px">Portal</a></li>
-				  <li><a data-toggle="tab" href="#menu1" style="min-height:60px">Dashboard</a></li>
+				  <!--<li><a data-toggle="tab" href="#menu1" style="min-height:60px">Dashboard</a></li>-->
 				</ul>
                 	
                 <li class="dropdown navbar-right" style="margin-right:15px">
@@ -445,7 +445,7 @@ org.json.JSONObject
 									  </tr>
 									</table>
 									
-                                    <div class="form-group">
+                                    <div class="form-group" style="display:none">
                                             <label><u>Category</u></label>
                                             <select id ="searchCategory" multiple class="form-control">
                                                 <option>New Car Any Brand</option>

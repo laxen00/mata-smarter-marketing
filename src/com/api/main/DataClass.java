@@ -21,7 +21,7 @@ import twitter4j.DirectMessage;
 import twitter4j.Relationship;
 import twitter4j.Status;
 
-import com.db.lookup.SqlLookUp;
+import com.db.lookup.Db2LookUp;
 import com.web.config.ConfigProperties;
 
 public class DataClass {
@@ -48,9 +48,9 @@ public class DataClass {
 //		System.out.println(page + "\t" + startingRow + "\t" + endRow);
 		
 		JSONObject confObj = config.getPropValues();
-		SqlLookUp sql = new SqlLookUp();
-		sql.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
-		Connection con = sql.getConnected();
+		Db2LookUp dblookup = new Db2LookUp();
+		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
+		Connection con = dblookup.getConnected();
 //		System.out.println("Database connected.");
 		
 		String start = "SELECT p.* FROM " +
@@ -59,7 +59,7 @@ public class DataClass {
 				 + "POSTINGDATE, POSTINGDATESTR, POSTURL, STATUSURL, QUERY, SCORE, SOURCE, STATUS,"
 				 + "MESSAGE, USERNAMELOGIN, READSTATUS, ROW_NUMBER() "
 				 + "OVER (ORDER BY POSTINGDATESTR DESC) AS row_num "
-				 + "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".DOC_FACT ";
+				 + "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA ";
 		
 		String end = ") AS p "
 				 + "WHERE p.row_num BETWEEN " + startingRow + " AND " + endRow;
@@ -105,7 +105,7 @@ public class DataClass {
 		rset.close();
 //		stmt.close();
 //		System.out.println("Result: " + arr);
-		sql.closeDB(con);
+		dblookup.closeDB(con);
 		if (arr.length() < 1) return null;
 		return arr;
 	}
@@ -116,13 +116,13 @@ public class DataClass {
 		int rowPerPage = 50;
 		
 		JSONObject confObj = config.getPropValues();
-		SqlLookUp sql = new SqlLookUp();
-		sql.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
-		Connection con = sql.getConnected();
+		Db2LookUp dblookup = new Db2LookUp();
+		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
+		Connection con = dblookup.getConnected();
 //		System.out.println("Database connected.");
 		
 		String q = "SELECT COUNT(1) AS TOTALROW "
-		 + "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".DOC_FACT";
+		 + "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA";
 		
 		if (searchQuery.length() > 0) {
 			JSONObject searchObj = new JSONObject(searchQuery);
@@ -148,7 +148,7 @@ public class DataClass {
 		else totalPage = (totalData / rowPerPage) + 1;
 		
 		if (totalPage == 0) totalPage = 1;
-		sql.closeDB(con);
+		dblookup.closeDB(con);
 		return totalPage;
 	}
 	
@@ -323,14 +323,14 @@ public class DataClass {
 				}
 			}
 			catch (Exception e) {
-				SqlLookUp sql = new SqlLookUp();
-				sql.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
-				Connection con = sql.getConnected();
+				Db2LookUp dblookup = new Db2LookUp();
+				dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
+				Connection con = dblookup.getConnected();
 //				System.out.println("Database connected.");
 				
 				String q = "SELECT ID, TEXT_CONTENT, CRITERIAID2, GENDER, SCREENNAME, NAME,"
 						 + "POSTINGDATE, POSTINGDATESTR, POSTURL, STATUSURL, QUERY, SCORE, SOURCE, STATUS,"
-						 + "MESSAGE, USERNAMELOGIN, READSTATUS FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".DOC_FACT WHERE ID="+postid;
+						 + "MESSAGE, USERNAMELOGIN, READSTATUS FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA WHERE ID="+postid;
 				
 //				System.out.println("Query: " + q);
 				
@@ -351,7 +351,7 @@ public class DataClass {
 					obj.put("notThisUser", "false");
 					arr.put(obj);
 				}
-				sql.closeDB(con);
+				dblookup.closeDB(con);
 			}
 		}
 		else {
@@ -407,15 +407,15 @@ public class DataClass {
 				
 			}
 		}
-		SqlLookUp sql = new SqlLookUp();
-		sql.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
-		Connection con = sql.getConnected();
-		String q = "UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".DOC_FACT SET "
+		Db2LookUp dblookup = new Db2LookUp();
+		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
+		Connection con = dblookup.getConnected();
+		String q = "UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA SET "
 				+ "ALERT=0 "
 				+ "WHERE ID="+postid+"";
 		System.out.println(q);
-		sql.executeStatement(q, con);
-		sql.closeDB(con);
+		dblookup.executeStatement(q, con);
+		dblookup.closeDB(con);
 		return arr;
 	}
 	
@@ -493,14 +493,14 @@ public class DataClass {
 	public static boolean setDraftMessage(String id, String message, String usernameLogin) throws Exception{
 		System.out.println("save to draft as user: "+usernameLogin);
 		JSONObject confObj = config.getPropValues();
-		SqlLookUp sql = new SqlLookUp();
+		Db2LookUp dblookup = new Db2LookUp();
 		int idParse = Integer.valueOf(id);
-		sql.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
-		Connection con = sql.getConnected();
-		sql.executeStatement("UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".DOC_FACT SET "
+		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
+		Connection con = dblookup.getConnected();
+		dblookup.executeStatement("UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA SET "
 				+ "STATUS='Saved As Draft', MESSAGE='"+message+"', USERNAMELOGIN='"+usernameLogin+"', READSTATUS='READ' "
 						+ "WHERE ID="+idParse+"" , con);
-		sql.closeDB(con);
+		dblookup.closeDB(con);
 		return true;
 	}
 	
@@ -512,13 +512,13 @@ public class DataClass {
 		if (replied == 1) {
 			ArrayList<ArrayList<String>> convs = new ArrayList<ArrayList<String>>();
 			JSONObject confObj = config.getPropValues();
-			SqlLookUp sql = new SqlLookUp();
+			Db2LookUp dblookup = new Db2LookUp();
 			int idParse = Integer.valueOf(id);
-			sql.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
-			Connection con = sql.getConnected();
-			convs = sql.executeSelect("SELECT ID, MESSAGE FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".DOC_FACT "
+			dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
+			Connection con = dblookup.getConnected();
+			convs = dblookup.executeSelect("SELECT ID, MESSAGE FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
 					+ "WHERE ID="+idParse+"", con, false);
-			sql.closeDB(con);
+			dblookup.closeDB(con);
 			for(ArrayList<String> conv : convs){
 				message = conv.get(1);
 			}				
@@ -561,18 +561,18 @@ public class DataClass {
 				out = twitter.twitterDM(url, message);
 		}
 		else {
-			SqlLookUp sql = new SqlLookUp();
+			Db2LookUp dblookup = new Db2LookUp();
 			if(id.length()<2){
 				String screenname = "ice1217";
 				out = UserClass.kc.sendDM(userlogin.getString("kaskusUser"), userlogin.getString("kaskusPass"), message, screenname);
 			}
 			else{
 				int idParse = Integer.valueOf(id);
-				sql.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
+				dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 				String q = "SELECT SCREENNAME "
-						 + "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".DOC_FACT "
+						 + "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
 						 + "WHERE ID="+idParse;
-				Connection con = sql.getConnected();
+				Connection con = dblookup.getConnected();
 				Statement stmt = null;
 				ResultSet rset;
 				stmt = con.createStatement();
@@ -584,7 +584,7 @@ public class DataClass {
 				while(rset.next()) {
 					screenname = rset.getString("SCREENNAME");
 				}
-				sql.closeDB(con);
+				dblookup.closeDB(con);
 				out = UserClass.kc.sendDM(userlogin.getString("kaskusUser"), userlogin.getString("kaskusPass"), message, screenname);
 			}
 		}
@@ -596,22 +596,22 @@ public class DataClass {
 		long millis = System.currentTimeMillis();
 		
 		JSONObject confObj = config.getPropValues();
-		SqlLookUp sql = new SqlLookUp();
+		Db2LookUp dblookup = new Db2LookUp();
 		int idParse = Integer.valueOf(id);
-		sql.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
-		Connection con = sql.getConnected();
-		int currentReply = setReplytoCurrent(sql, con, idParse);
-		sql.executeStatement("UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".DOC_FACT SET "
+		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
+		Connection con = dblookup.getConnected();
+		int currentReply = setReplytoCurrent(dblookup, con, idParse);
+		dblookup.executeStatement("UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA SET "
 				+ "STATUS='Ongoing', MESSAGE='"+message+"', USERNAMELOGIN='"+usernameLogin+"', READSTATUS='READ', ALERT=0, UPDATEDATE="+millis+", REPLY="+currentReply+" "
 						+ "WHERE ID="+idParse+"" , con);
-		sql.closeDB(con);
+		dblookup.closeDB(con);
 		return true;
 	}
 	
-	private static int setReplytoCurrent(SqlLookUp sql, Connection con, int idParse) throws Exception{
+	private static int setReplytoCurrent(Db2LookUp dblookup, Connection con, int idParse) throws Exception{
 		JSONObject confObj = config.getPropValues();
 		ArrayList<ArrayList<String>> convs = new ArrayList<ArrayList<String>>();
-		convs = sql.executeSelect("SELECT REPLY FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".DOC_FACT "
+		convs = dblookup.executeSelect("SELECT REPLY FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
 				+ "WHERE ID="+idParse+"", con, false);
 		for(ArrayList<String> conv : convs){
 			String out = conv.get(0);
@@ -640,23 +640,23 @@ public class DataClass {
 		System.out.println("change status for id : "+id+" set as : "+STATUS_NAMES[num]);
 		boolean out = false;
 		JSONObject confObj = config.getPropValues();
-		SqlLookUp sql = new SqlLookUp();
+		Db2LookUp dblookup = new Db2LookUp();
 		int idParse = Integer.valueOf(id);
 		String status = STATUS_NAMES[num];
-		sql.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
-		Connection con = sql.getConnected();
+		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
+		Connection con = dblookup.getConnected();
 		try {
-			String q = "UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".DOC_FACT SET "
+			String q = "UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA SET "
 					+ "STATUS='"+status+"' "
 					+ "WHERE ID="+idParse+"";
 //			System.out.println(q);
-			sql.executeStatement(q, con);
-			sql.closeDB(con);
+			dblookup.executeStatement(q, con);
+			dblookup.closeDB(con);
 			out = true;
 		}
 		catch (Exception e) {
 			out = false;
-			sql.closeDB(con);
+			dblookup.closeDB(con);
 			e.printStackTrace();
 		}
 		return out;
@@ -665,23 +665,23 @@ public class DataClass {
 	public static void setAlltoWaiting() throws Exception{
 		ArrayList<ArrayList<String>> convs = new ArrayList<ArrayList<String>>();
 		JSONObject confObj = config.getPropValues();
-		SqlLookUp sql = new SqlLookUp();
+		Db2LookUp dblookup = new Db2LookUp();
 //		int idParse = Integer.valueOf(id);
-		sql.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
-		Connection con = sql.getConnected();
-		convs = sql.executeSelect("SELECT COUNT(1) FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".DOC_FACT "
+		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
+		Connection con = dblookup.getConnected();
+		convs = dblookup.executeSelect("SELECT COUNT(1) FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
 				+ "WHERE STATUS IS NULL", con, false);
 		for(ArrayList<String> conv : convs) {
 //			System.out.println(conv);
 			int total = Integer.parseInt(conv.get(0));
 			if (total>0){
 				System.out.println("null status found, set all to Not Responded Yet");
-				sql.executeStatement("UPDATE "+ confObj.getString("dbname") + "." + confObj.getString("schema") + ".DOC_FACT "
+				dblookup.executeStatement("UPDATE "+ confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
 						+ "SET STATUS='Not Responded Yet' WHERE STATUS IS NULL", con);
 			}
 			break;
 		}
-		sql.closeDB(con);
+		dblookup.closeDB(con);
 	}
 	
 	public static int checkFollowingTwitter(String url, JSONObject userlogin) throws Exception {
@@ -704,12 +704,12 @@ public class DataClass {
 		ArrayList<ArrayList<String>> lists = new ArrayList<ArrayList<String>>();
 		ArrayList<Integer> dataList = new ArrayList<Integer>();
 		JSONObject confObj = config.getPropValues();
-		SqlLookUp sql = new SqlLookUp();
+		Db2LookUp dblookup = new Db2LookUp();
 //		int idParse = Integer.valueOf(id);
-		sql.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
-		Connection con = sql.getConnected();
+		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
+		Connection con = dblookup.getConnected();
 		
-		lists = sql.executeSelect("SELECT sum(case when STATUS='Not Responded Yet' then 1 end) as tNRY, "
+		lists = dblookup.executeSelect("SELECT sum(case when STATUS='Not Responded Yet' then 1 end) as tNRY, "
 				+ "sum(case when STATUS='No Need To Reply' then 1 end) as tSpam, "
 				+ "sum(case when STATUS='Ongoing' then 1 end) as tOngoing, "
 				+ "sum(case when STATUS='Closed Communication' then 1 end) as tClosed, "
@@ -718,7 +718,7 @@ public class DataClass {
 				+ "sum(case when STATUS='Closed Dealer Communication (Buy)' then 1 end) as tBuy, "
 				+ "sum(case when STATUS='Closed Dealer Communication (Not Buy)' then 1 end) as tNotBuy, "
 				+ "sum(case when STATUS='Saved As Draft' then 1 end) as tSAD "
-				+ "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".DOC_FACT;", con, false);
+				+ "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA;", con, false);
 		
 		for(ArrayList<String> list : lists){
 			for(String data : list){
@@ -729,18 +729,18 @@ public class DataClass {
 			}
 		}
 		
-		sql.closeDB(con);
+		dblookup.closeDB(con);
 		return dataList;
 	}
 	
 	private static int checkIfDrafted (String id) throws Exception {
 		int drafted = 0;
-		SqlLookUp sql = new SqlLookUp();
-		Connection con = sql.getConnected();
+		Db2LookUp dblookup = new Db2LookUp();
+		Connection con = dblookup.getConnected();
 		JSONObject confObj = config.getPropValues();
 		ArrayList<ArrayList<String>> convs = new ArrayList<ArrayList<String>>();
 		try {
-			convs = sql.executeSelect("SELECT STATUS FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".DOC_FACT "
+			convs = dblookup.executeSelect("SELECT STATUS FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
 					+ "WHERE ID="+id+"", con, false);
 			for(ArrayList<String> conv : convs){
 				String status = conv.get(0);
@@ -749,23 +749,23 @@ public class DataClass {
 		} catch (Exception e) {
 			
 		}
-		sql.closeDB(con);
+		dblookup.closeDB(con);
 		return drafted;
 	}
 	
 	public static JSONArray checkNotif() throws Exception {
 		JSONArray arr = new JSONArray();
-		SqlLookUp sql = new SqlLookUp();
-		Connection con = sql.getConnected();
+		Db2LookUp dblookup = new Db2LookUp();
+		Connection con = dblookup.getConnected();
 		JSONObject confObj = config.getPropValues();
 		ArrayList<ArrayList<String>> results = new ArrayList<ArrayList<String>>();
 		try {
 			String q = "SELECT ID, TEXT_CONTENT, CRITERIAID2, GENDER, SCREENNAME, NAME,"
 					 + "POSTINGDATE, POSTINGDATESTR, POSTURL, STATUSURL, QUERY, SCORE, SOURCE, STATUS,"
 					 + "MESSAGE, USERNAMELOGIN, READSTATUS FROM "
-					 + confObj.getString("dbname") + "." + confObj.getString("schema") + ".DOC_FACT "
+					 + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
 					 + "WHERE ALERT=1 ORDER BY POSTINGDATESTR DESC";
-			results = sql.executeSelect(q, con, false);
+			results = dblookup.executeSelect(q, con, false);
 //			System.out.println(q);
 			String[] colNames = {
 					"id", "text_content", "criteriaid", "gender", "screenname", "name",
@@ -834,11 +834,11 @@ public class DataClass {
 //		
 //		ArrayList<ArrayList<String>> lists = new ArrayList<ArrayList<String>>();
 //		JSONObject confObj = config.getPropValues();
-//		SqlLookUp sql = new SqlLookUp();
+//		Db2LookUp dblookup = new Db2LookUp();
 ////		int idParse = Integer.valueOf(id);
-//		sql.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
-//		Connection con = sql.getConnected();
-//		lists = sql.executeSelect("SELECT USERNAMELOGIN, USERNAME, PASSWORD, CONSUMERKEY, CONSUMERSECRET, ACCESSTOKEN, ACCESSTOKENSECRET "
+//		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
+//		Connection con = dblookup.getConnected();
+//		lists = dblookup.executeSelect("SELECT USERNAMELOGIN, USERNAME, PASSWORD, CONSUMERKEY, CONSUMERSECRET, ACCESSTOKEN, ACCESSTOKENSECRET "
 //				+ "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".LOGINSETTING "
 //				+ "WHERE USERNAMELOGIN='"+username+"'", con, false);
 //				
@@ -870,7 +870,7 @@ public class DataClass {
 //			defaultAccessTokenSecret = accessTokenSecret;
 //		}
 //		
-//		sql.executeStatement("UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".LOGINSETTING "
+//		dblookup.executeStatement("UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".LOGINSETTING "
 //				+ "SET USERNAME='"+defaultUsernameKaskus+"', PASSWORD='"+defaultPasswordKaskus+"', "
 //				+ "CONSUMERKEY='"+defaultConsumerKey+"', CONSUMERSECRET='"+defaultConsumerSecret+"', "
 //				+ "ACCESSTOKEN='"+defaultAccessToken+"', ACCESSTOKENSECRET='"+defaultAccessTokenSecret+"' "

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
-import com.db.lookup.SqlLookUp;
+import com.db.lookup.Db2LookUp;
 import com.web.config.ConfigProperties;
 
 public class UserClass {
@@ -22,15 +22,16 @@ public class UserClass {
 	public static int login (String username, String password) throws Exception {
 		int output = 0;
 		JSONObject dbObj = config.getPropValues();
+		username = username.toUpperCase();
 		System.out.println("logging in.. : "+username);
-		SqlLookUp sql = new SqlLookUp();
-		sql.setData(dbObj.getString("hostname"), dbObj.getString("dbname"), dbObj.getString("dbuser"), dbObj.getString("dbpass"));
-		con = sql.getConnected();
+		Db2LookUp dblookup = new Db2LookUp();
+		dblookup.setData(dbObj.getString("hostname"), dbObj.getString("dbname"), dbObj.getString("dbuser"), dbObj.getString("dbpass"));
+		con = dblookup.getConnected();
 //		System.out.println("Database connected.");
 		
 		String q = "SELECT PASSWORDLOGIN FROM " + dbObj.getString("dbname") + "." + dbObj.getString("schema") + ".LOGINDETAIL WHERE USERNAMELOGIN='" + username + "'";
-		ArrayList<ArrayList<String>> results = sql.executeSelect(q, con, false);
-		
+		ArrayList<ArrayList<String>> results = dblookup.executeSelect(q, con, false);
+
 		for (ArrayList<String> result : results) {
 			for (String data : result) {
 				if (password.equals(data)) {
@@ -55,14 +56,14 @@ public class UserClass {
 			, String consumerSecret, String oauthToken, String oauthSecret) throws Exception{
 		System.out.println("save setting for user : "+usernamelogin);
 		JSONObject confObj = config.getPropValues();
-		SqlLookUp sql = new SqlLookUp();
-		sql.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
-		Connection con = sql.getConnected();
-		sql.executeStatement("UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".LOGINSETTING SET "
+		Db2LookUp dblookup = new Db2LookUp();
+		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
+		Connection con = dblookup.getConnected();
+		dblookup.executeStatement("UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".LOGINSETTING SET "
 				+ "USERNAME='"+username+"',PASSWORD='"+password+"',CONSUMERKEY='"+consumerKey+"',CONSUMERSECRET='"+consumerSecret+"',"
 						+ "ACCESSTOKEN='"+oauthToken+"',ACCESSTOKENSECRET='"+oauthSecret+"' "
 								+ "WHERE USERNAMELOGIN='"+usernamelogin+"'", con);
-		sql.closeDB(con);
+		dblookup.closeDB(con);
 		return true;
 	}
 	
@@ -70,12 +71,12 @@ public class UserClass {
 		System.out.println("get setting for user : "+usernamelogin);
 		ArrayList<ArrayList<String>> userLoginDetails = new ArrayList<ArrayList<String>>(); 
 		JSONObject confObj = config.getPropValues();
-		SqlLookUp sql = new SqlLookUp();
-		sql.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
-		Connection con = sql.getConnected();
-		userLoginDetails = sql.executeSelect("SELECT * FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".LOGINSETTING "
+		Db2LookUp dblookup = new Db2LookUp();
+		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
+		Connection con = dblookup.getConnected();
+		userLoginDetails = dblookup.executeSelect("SELECT * FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".LOGINSETTING "
 				+ "WHERE USERNAMELOGIN='"+usernamelogin+"'", con, false);
-		sql.closeDB(con);
+		dblookup.closeDB(con);
 		
 		JSONObject user = new JSONObject();
 		String[] colNames = {"username","kaskusUser","kaskusPass","consumerKey",
@@ -92,16 +93,16 @@ public class UserClass {
 	
 	public static boolean insertFirstTime(String username)throws Exception{
 		JSONObject confObj = config.getPropValues();
-		SqlLookUp sql = new SqlLookUp();
-		sql.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
-		Connection con = sql.getConnected();
+		Db2LookUp dblookup = new Db2LookUp();
+		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
+		Connection con = dblookup.getConnected();
 		ArrayList<ArrayList<String>> checkUser = new ArrayList<ArrayList<String>>(); 
-		checkUser = sql.executeSelect("SELECT USERNAMELOGIN FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".LOGINSETTING WHERE USERNAMELOGIN='"+username+"'", con, false);
+		checkUser = dblookup.executeSelect("SELECT USERNAMELOGIN FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".LOGINSETTING WHERE USERNAMELOGIN='"+username+"'", con, false);
 		if(checkUser.size()<1){
 			System.out.println("setup user for first time");
-			sql.executeStatement("INSERT INTO " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".LOGINSETTING VALUES ('"+username+"','N/A','N/A','N/A','N/A','N/A','N/A') ", con);
+			dblookup.executeStatement("INSERT INTO " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".LOGINSETTING VALUES ('"+username+"','N/A','N/A','N/A','N/A','N/A','N/A') ", con);
 		}
-		sql.closeDB(con);
+		dblookup.closeDB(con);
 		return true;
 	}
 	

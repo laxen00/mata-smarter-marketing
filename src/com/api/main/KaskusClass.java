@@ -22,7 +22,7 @@ import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 
-import com.db.lookup.SqlLookUp;
+import com.db.lookup.Db2LookUp;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
@@ -314,16 +314,16 @@ public class KaskusClass {
 	public static ArrayList<String> getKaskusConv(String id) throws Exception{
 		ArrayList<ArrayList<String>> convs = new ArrayList<ArrayList<String>>();
 		JSONObject confObj = config.getPropValues();
-		SqlLookUp sql = new SqlLookUp();
+		Db2LookUp dblookup = new Db2LookUp();
 //		int idParse = Integer.valueOf(id);
-		sql.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
-		Connection con = sql.getConnected();
+		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
+		Connection con = dblookup.getConnected();
 		if(id.length()<2){
 			id = "0";
 		}
-		convs = sql.executeSelect("SELECT SCREENNAME, POSTINGDATESTR, TEXT_CONTENT, MESSAGE, POSTURL FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".DOC_FACT "
+		convs = dblookup.executeSelect("SELECT SCREENNAME, POSTINGDATESTR, TEXT_CONTENT, MESSAGE, POSTURL FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
 				+ "WHERE ID="+id+"", con, false);
-		sql.closeDB(con);
+		dblookup.closeDB(con);
 		for(ArrayList<String> conv : convs) {
 			return conv;
 		}
@@ -333,12 +333,12 @@ public class KaskusClass {
 	public static String getKaskusPic(String screenName) throws Exception{
 		ArrayList<ArrayList<String>> convs = new ArrayList<ArrayList<String>>();
 		JSONObject confObj = DataClass.config.getPropValues();
-		SqlLookUp sql = new SqlLookUp();
-		sql.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
-		Connection con = sql.getConnected();
-		convs = sql.executeSelect("SELECT PHOTOURL FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".DOC_FACT "
+		Db2LookUp dblookup = new Db2LookUp();
+		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
+		Connection con = dblookup.getConnected();
+		convs = dblookup.executeSelect("SELECT PHOTOURL FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
 				+ "WHERE SCREENNAME='"+screenName+"'", con, false);
-		sql.closeDB(con);
+		dblookup.closeDB(con);
 		for(ArrayList<String> conv : convs) {
 			String url = conv.get(0);
 			url = url.replaceAll("s.kaskus.id", "dev.summit.com.sg:82");
