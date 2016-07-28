@@ -52,7 +52,7 @@
 	</script>
 </head>
 
-<body onload="testaja()" style="background: url(../images/background_blue.jpg) no-repeat center center fixed; 
+<body onload="testaja()" style="background: url(../images/silver-light-blue.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -63,7 +63,7 @@
 		<div class="col-lg-12 fade-in one" style="background: rgba(100,100,100,0.15); box-shadow: 2px 2px 10px #333333; margin-top:180px; padding:50px 0 50px 0">
             <div class="row">
 			<div class="col-md-4 col-md-offset-1 fade-in two">
-			<img src="../images/max.png" width="350px" style="margin:30px 30px 0 -35px">
+			<img src="../images/mata_analytics_816w.png" width="350px" style="margin:30px 30px 0 -35px">
 			</div>
 			<div class="col-md-4 col-md-offset-2 fade-in two">
 				<!--img src="../images/toyotalogo.png" width="360px"-->
