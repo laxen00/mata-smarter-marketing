@@ -49,7 +49,7 @@ org.json.JSONObject
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Toyota Smarter Marketing Portal</title>
+    <title>Mata Smarter Marketing Portal</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="icon" type="image/png" href="../images/ticon.png" />
@@ -188,7 +188,7 @@ org.json.JSONObject
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.jsp"><img src="../images/maxlogo1.png" height="40" width="290" style="margin-top:-10px; margin-left:-5px"></a>
+                <a class="navbar-brand" href="index.jsp"><img src="../images/matasmarterlogo.png" height="40" width="290" style="margin-top:-10px; margin-left:-5px"></a>
             </div>
             <!-- /.navbar-header -->
 
