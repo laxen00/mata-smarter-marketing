@@ -55,10 +55,10 @@ public class DataClass {
 		
 		String start = "SELECT p.* FROM " +
 				 "( "
-				 + "SELECT ID, TEXT_CONTENT, CRITERIAID2, GENDER, SCREENNAME, NAME,"
-				 + "POSTINGDATE, POSTINGDATESTR, POSTURL, STATUSURL, QUERY, SCORE, SOURCE, STATUS,"
-				 + "MESSAGE, USERNAMELOGIN, READSTATUS, ROW_NUMBER() "
-				 + "OVER (ORDER BY POSTINGDATESTR DESC) AS row_num "
+				 + "SELECT \"_ID\", \"BODY\", \"GENDER\", \"SCREENNAME\", \"NAME\","
+				 + "\"DATE\", \"QUERY\", \"SCORE\", \"SOURCE\", \"STATUS\","
+				 + "\"MESSAGE\", \"USERNAMELOGIN\", \"READSTATUS\", ROW_NUMBER() "
+				 + "OVER (ORDER BY \"DATE\" DESC) AS row_num "
 				 + "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA ";
 		
 		String end = ") AS p "
@@ -91,9 +91,55 @@ public class DataClass {
 				"message", "usernamelogin", "readstatus"
 		};
 		
+		String id = "";
+		String body = "";
+		String gender = "";
+		String screenname = "";
+		String name = "";
+		String date = "";
+		String query = "";
+		String score = "";
+		String source = "";
+		String status = "";
+		String message = "";
+		String usernamelogin = "";
+		String readstatus = "";
+		
 		while (rset.next()){
 			JSONObject obj = new JSONObject();
-			while(column<=maxColumn){
+			for (int i = 1; i <= maxColumn; i++) {
+				if (i == 1) { id = rset.getString(i); continue; }
+				if (i == 2) { body = rset.getString(i); continue; }
+				if (i == 3) { gender = rset.getString(i); continue; }
+				if (i == 4) { screenname = rset.getString(i); continue; }
+				if (i == 5) { name = rset.getString(i); continue; }
+				if (i == 6) { date = rset.getString(i); continue; }
+				if (i == 7) { query = rset.getString(i); continue; }
+				if (i == 8) { score = rset.getString(i); continue; }
+				if (i == 9) { source = rset.getString(i); continue; }
+				if (i == 10) { status = rset.getString(i); continue; }
+				if (i == 11) { message = rset.getString(i); continue; }
+				if (i == 12) { usernamelogin = rset.getString(i); continue; }
+				if (i == 13) { readstatus = rset.getString(i); continue; }
+			}
+			for (int j = 0; j < colNames.length; j++) {
+				if (j == 0) { obj.put(colNames[j], id); continue; }
+				if (j == 1) { obj.put(colNames[j], body); continue; }
+				if (j == 2) { obj.put(colNames[j], ""); continue; }
+				if (j == 3) { obj.put(colNames[j], gender); continue; }
+				if (j == 4) { obj.put(colNames[j], screenname); continue; }
+				if (j == 5) { obj.put(colNames[j], name); continue; }
+				if (j == 6) { obj.put(colNames[j], date); continue; }
+				if (j == 7) { obj.put(colNames[j], date); continue; }
+				if (j == 8) { obj.put(colNames[j], id); continue; }
+				if (j == 9) { obj.put(colNames[j], id); continue; }
+				if (j == 10) { obj.put(colNames[j], query); continue; }
+				if (j == 11) { obj.put(colNames[j], score); continue; }
+				if (j == 12) { obj.put(colNames[j], source); continue; }
+				if (j == 13) { obj.put(colNames[j], status); continue; }
+				if (j == 14) { obj.put(colNames[j], message); continue; }
+				if (j == 15) { obj.put(colNames[j], usernamelogin); continue; }
+				if (j == 16) { obj.put(colNames[j], readstatus); continue; }
 				obj.put(colNames[column-1], rset.getString(column));
 //				System.out.println(colNames[column-1] + " ===> " + rset.getString(column));
 				column++;
@@ -709,7 +755,7 @@ public class DataClass {
 		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 		Connection con = dblookup.getConnected();
 		
-		lists = dblookup.executeSelect("SELECT sum(case when STATUS='Not Responded Yet' then 1 end) as tNRY, "
+		String q = "SELECT sum(case when STATUS='Not Responded Yet' then 1 end) as tNRY, "
 				+ "sum(case when STATUS='No Need To Reply' then 1 end) as tSpam, "
 				+ "sum(case when STATUS='Ongoing' then 1 end) as tOngoing, "
 				+ "sum(case when STATUS='Closed Communication' then 1 end) as tClosed, "
@@ -718,7 +764,9 @@ public class DataClass {
 				+ "sum(case when STATUS='Closed Dealer Communication (Buy)' then 1 end) as tBuy, "
 				+ "sum(case when STATUS='Closed Dealer Communication (Not Buy)' then 1 end) as tNotBuy, "
 				+ "sum(case when STATUS='Saved As Draft' then 1 end) as tSAD "
-				+ "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA;", con, false);
+				+ "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA";
+		System.out.println("Query: " + q);
+		lists = dblookup.executeSelect(q, con, false);
 		
 		for(ArrayList<String> list : lists){
 			for(String data : list){

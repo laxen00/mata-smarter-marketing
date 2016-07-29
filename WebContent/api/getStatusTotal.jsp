@@ -15,7 +15,7 @@ java.util.ArrayList
 	try {
 		totalArray = DataClass.listCurrentStatusDocs();
 		for (int i=0;i<totalArray.size();i++) {
-			obj.put(names[i], totalArray.get(i));
+			obj.put(names[i], totalArray.get(i).toString());
 		}
 	}
 	catch (Exception e) {
