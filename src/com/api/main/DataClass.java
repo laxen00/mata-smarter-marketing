@@ -140,7 +140,7 @@ public class DataClass {
 				if (j == 14) { obj.put(colNames[j], message); continue; }
 				if (j == 15) { obj.put(colNames[j], usernamelogin); continue; }
 				if (j == 16) { obj.put(colNames[j], readstatus); continue; }
-				obj.put(colNames[column-1], rset.getString(column));
+//				obj.put(colNames[column-1], rset.getString(column));
 //				System.out.println(colNames[column-1] + " ===> " + rset.getString(column));
 				column++;
 			}
@@ -374,9 +374,9 @@ public class DataClass {
 				Connection con = dblookup.getConnected();
 //				System.out.println("Database connected.");
 				
-				String q = "SELECT ID, TEXT_CONTENT, CRITERIAID2, GENDER, SCREENNAME, NAME,"
-						 + "POSTINGDATE, POSTINGDATESTR, POSTURL, STATUSURL, QUERY, SCORE, SOURCE, STATUS,"
-						 + "MESSAGE, USERNAMELOGIN, READSTATUS FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA WHERE ID="+postid;
+				String q = "SELECT \"_ID\", \"BODY\", \"GENDER\", \"SCREENNAME\", \"NAME\","
+							 + "\"DATE\", \"QUERY\", \"SCORE\", \"SOURCE\", \"STATUS\","
+							 + "\"MESSAGE\", \"USERNAMELOGIN\", \"READSTATUS\" FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA WHERE ID="+postid;
 				
 //				System.out.println("Query: " + q);
 				
@@ -387,10 +387,10 @@ public class DataClass {
 //				ResultSetMetaData rsmd = rset.getMetaData();	
 				while(rset.next()) {
 					JSONObject obj = new JSONObject();
-					obj.put("createdAt", rset.getString("POSTINGDATESTR"));
+					obj.put("createdAt", rset.getString("DATE"));
 					obj.put("screenname", rset.getString("SCREENNAME"));
 					obj.put("profileImageUrl", "../images/anonymous.png");
-					obj.put("text", rset.getString("TEXT_CONTENT"));
+					obj.put("text", rset.getString("BODY"));
 					obj.put("tweetId", id);
 					obj.put("isRetweeted", "false");
 					obj.put("postUrl", url);
@@ -458,7 +458,7 @@ public class DataClass {
 		Connection con = dblookup.getConnected();
 		String q = "UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA SET "
 				+ "ALERT=0 "
-				+ "WHERE ID="+postid+"";
+				+ "WHERE _ID="+postid+"";
 		System.out.println(q);
 		dblookup.executeStatement(q, con);
 		dblookup.closeDB(con);
@@ -545,7 +545,7 @@ public class DataClass {
 		Connection con = dblookup.getConnected();
 		dblookup.executeStatement("UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA SET "
 				+ "STATUS='Saved As Draft', MESSAGE='"+message+"', USERNAMELOGIN='"+usernameLogin+"', READSTATUS='READ' "
-						+ "WHERE ID="+idParse+"" , con);
+						+ "WHERE _ID="+idParse+"" , con);
 		dblookup.closeDB(con);
 		return true;
 	}
@@ -562,8 +562,8 @@ public class DataClass {
 			int idParse = Integer.valueOf(id);
 			dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 			Connection con = dblookup.getConnected();
-			convs = dblookup.executeSelect("SELECT ID, MESSAGE FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
-					+ "WHERE ID="+idParse+"", con, false);
+			convs = dblookup.executeSelect("SELECT _ID, MESSAGE FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
+					+ "WHERE _ID="+idParse+"", con, false);
 			dblookup.closeDB(con);
 			for(ArrayList<String> conv : convs){
 				message = conv.get(1);
@@ -617,7 +617,7 @@ public class DataClass {
 				dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 				String q = "SELECT SCREENNAME "
 						 + "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
-						 + "WHERE ID="+idParse;
+						 + "WHERE _ID="+idParse;
 				Connection con = dblookup.getConnected();
 				Statement stmt = null;
 				ResultSet rset;
@@ -649,7 +649,7 @@ public class DataClass {
 		int currentReply = setReplytoCurrent(dblookup, con, idParse);
 		dblookup.executeStatement("UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA SET "
 				+ "STATUS='Ongoing', MESSAGE='"+message+"', USERNAMELOGIN='"+usernameLogin+"', READSTATUS='READ', ALERT=0, UPDATEDATE="+millis+", REPLY="+currentReply+" "
-						+ "WHERE ID="+idParse+"" , con);
+						+ "WHERE _ID="+idParse+"" , con);
 		dblookup.closeDB(con);
 		return true;
 	}
@@ -658,7 +658,7 @@ public class DataClass {
 		JSONObject confObj = config.getPropValues();
 		ArrayList<ArrayList<String>> convs = new ArrayList<ArrayList<String>>();
 		convs = dblookup.executeSelect("SELECT REPLY FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
-				+ "WHERE ID="+idParse+"", con, false);
+				+ "WHERE _ID="+idParse+"", con, false);
 		for(ArrayList<String> conv : convs){
 			String out = conv.get(0);
 			try{
@@ -694,7 +694,7 @@ public class DataClass {
 		try {
 			String q = "UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA SET "
 					+ "STATUS='"+status+"' "
-					+ "WHERE ID="+idParse+"";
+					+ "WHERE _ID="+idParse+"";
 //			System.out.println(q);
 			dblookup.executeStatement(q, con);
 			dblookup.closeDB(con);
@@ -789,7 +789,7 @@ public class DataClass {
 		ArrayList<ArrayList<String>> convs = new ArrayList<ArrayList<String>>();
 		try {
 			convs = dblookup.executeSelect("SELECT STATUS FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
-					+ "WHERE ID="+id+"", con, false);
+					+ "WHERE _ID="+id+"", con, false);
 			for(ArrayList<String> conv : convs){
 				String status = conv.get(0);
 				if (status.equalsIgnoreCase("Saved As Draft")) drafted = 1;
@@ -808,11 +808,11 @@ public class DataClass {
 		JSONObject confObj = config.getPropValues();
 		ArrayList<ArrayList<String>> results = new ArrayList<ArrayList<String>>();
 		try {
-			String q = "SELECT ID, TEXT_CONTENT, CRITERIAID2, GENDER, SCREENNAME, NAME,"
-					 + "POSTINGDATE, POSTINGDATESTR, POSTURL, STATUSURL, QUERY, SCORE, SOURCE, STATUS,"
-					 + "MESSAGE, USERNAMELOGIN, READSTATUS FROM "
+			String q = "SELECT \"_ID\", \"BODY\", \"GENDER\", \"SCREENNAME\", \"NAME\","
+					 + "\"DATE\", \"QUERY\", \"SCORE\", \"SOURCE\", \"STATUS\","
+					 + "\"MESSAGE\", \"USERNAMELOGIN\", \"READSTATUS\" FROM "
 					 + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
-					 + "WHERE ALERT=1 ORDER BY POSTINGDATESTR DESC";
+					 + "WHERE \"ALERT\"=1 ORDER BY \"DATE\" DESC";
 			results = dblookup.executeSelect(q, con, false);
 //			System.out.println(q);
 			String[] colNames = {
@@ -821,12 +821,65 @@ public class DataClass {
 					"message", "usernamelogin", "readstatus"
 			};
 			
+			String id = "";
+			String body = "";
+			String gender = "";
+			String screenname = "";
+			String name = "";
+			String date = "";
+			String query = "";
+			String score = "";
+			String source = "";
+			String status = "";
+			String message = "";
+			String usernamelogin = "";
+			String readstatus = "";
+			
 			for (ArrayList<String> result : results) {
 				JSONObject obj = new JSONObject();
-				for (int y = 0 ; y < result.size() ; y++){
-					obj.put(colNames[y], result.get(y));
-//					System.out.println(colNames[y] + " ===> " + result.get(y));
+				for (int i = 0; i < 13; i++) {
+					if (i == 0) { id = result.get(i); continue; }
+					if (i == 1) { body = result.get(i); continue; }
+					if (i == 2) { gender = result.get(i);; continue; }
+					if (i == 3) { screenname = result.get(i); continue; }
+					if (i == 4) { name = result.get(i);; continue; }
+					if (i == 5) { date = result.get(i); continue; }
+					if (i == 6) { query = result.get(i); continue; }
+					if (i == 7) { score = result.get(i); continue; }
+					if (i == 8) { source = result.get(i); continue; }
+					if (i == 9) { status = result.get(i); continue; }
+					if (i == 10) { message = result.get(i); continue; }
+					if (i == 11) { usernamelogin = result.get(i); continue; }
+					if (i == 12) { readstatus = result.get(i);; continue; }
 				}
+				
+				for (int j = 0; j < colNames.length; j++) {
+					if (j == 0) { obj.put(colNames[j], id); continue; }
+					if (j == 1) { obj.put(colNames[j], body); continue; }
+					if (j == 2) { obj.put(colNames[j], ""); continue; }
+					if (j == 3) { obj.put(colNames[j], gender); continue; }
+					if (j == 4) { obj.put(colNames[j], screenname); continue; }
+					if (j == 5) { obj.put(colNames[j], name); continue; }
+					if (j == 6) { obj.put(colNames[j], date); continue; }
+					if (j == 7) { obj.put(colNames[j], date); continue; }
+					if (j == 8) { obj.put(colNames[j], id); continue; }
+					if (j == 9) { obj.put(colNames[j], id); continue; }
+					if (j == 10) { obj.put(colNames[j], query); continue; }
+					if (j == 11) { obj.put(colNames[j], score); continue; }
+					if (j == 12) { obj.put(colNames[j], source); continue; }
+					if (j == 13) { obj.put(colNames[j], status); continue; }
+					if (j == 14) { obj.put(colNames[j], message); continue; }
+					if (j == 15) { obj.put(colNames[j], usernamelogin); continue; }
+					if (j == 16) { obj.put(colNames[j], readstatus); continue; }
+//					obj.put(colNames[column-1], rset.getString(column));
+//					System.out.println(colNames[column-1] + " ===> " + rset.getString(column));
+//					column++;
+				}
+				
+//				for (int y = 0 ; y < result.size() ; y++){
+//					obj.put(colNames[y], result.get(y));
+//					System.out.println(colNames[y] + " ===> " + result.get(y));
+//				}
 				System.out.println(obj);
 				arr.put(obj);
 			}
