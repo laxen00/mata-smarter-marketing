@@ -173,32 +173,39 @@ org.json.JSONObject
 	<%
 		}
 	%>
-    <div id="wrapper" style=" background: transparent; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+    <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; height:60px;">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0px;  background: #45484d; /* Old browsers */
+  background: -moz-linear-gradient(top,  #45484d 0%, #000000 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#45484d), color-stop(100%,#000000)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #45484d 0%,#000000 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #45484d 0%,#000000 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #45484d 0%,#000000 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #45484d 0%,#000000 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+  border-bottom: 3px solid #286CD1;">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.jsp"><img src="../images/matasmarterlogo.png" height="75" width="245" style="margin-top:-22px; margin-left:-5px; margin-right: -10px"></a>
+                <a class="navbar-brand" href="index.jsp">
+                	Mata Analytics Smarter Marketing
+                </a>
             </div>
             <!-- /.navbar-header -->
-
-            <ul class="nav navbar-top-links">
-                <ul class="nav nav-tabs navbar-left">
-				  <li class="active"><a data-toggle="tab" href="#home" style="min-height:60px">Portal</a></li>
-				  <!--<li><a data-toggle="tab" href="#menu1" style="min-height:60px">Dashboard</a></li>-->
-				</ul>
-                	
-                <li class="dropdown navbar-right" style="margin-right:15px">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <% out.print(username); %> <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+			
+            <ul class="nav navbar-top-links navbar-right">
+           <li class="dropdown navbar-right" style="margin-right:-10px">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#5e5e5e">
+                        <i class="fa fa-bell fa-fw"></i><span id="notifCount">0</span>  <i class="fa fa-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-user">
+                    <ul id="notifs" class="dropdown-menu dropdown-alerts"></ul>
+
+                </li>
+           
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#5e5e5e">
+                        <% out.print(username); %><i class="fa fa-user fa-fw" style="margin-left:5px"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                   <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
                         <li><a href="#" data-toggle="modal" data-target="#usersettings"><i class="fa fa-gear fa-fw"></i> Settings</a>
@@ -207,49 +214,21 @@ org.json.JSONObject
                         <li><a href="../api/processLogout.jsp"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
-					
                     <!-- /.dropdown-user -->
                 </li>
-				<li class="dropdown navbar-right" style="margin-right:-10px">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell fa-fw"></i><span id="notifCount">0</span>  <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul id="notifs" class="dropdown-menu dropdown-alerts"></ul>
-
-                </li>
-				<div class="navbar-right" style="margin-top:10px">
-				<table style="margin:0 5px 0 5px;text-align: center;border-spacing: 13px 0px;border-collapse: separate;">
-					<tr>
-						<td><img src="../images/1_sq1.png" height="30" width="30" data-toggle="tooltip" data-placement="bottom" title="Not Responded Yet"></td>
-						<td><img src="../images/2_100ed1.png" height="30" width="30" data-toggle="tooltip" data-placement="bottom" title="No Need To Reply"></td>
-						<td><img src="../images/3_ed1.png" height="30" width="30" data-toggle="tooltip" data-placement="bottom" title="Ongoing"></td>
-						<td><img src="../images/4_ed1.png" height="30" width="30" data-toggle="tooltip" data-placement="bottom" title="Closed Communication"></td>
-						<td><img src="../images/9.png" height="30" width="30" data-toggle="tooltip" data-placement="bottom" title="Closed Communication By Phone"></td>
-						<td><img src="../images/5_ed1.png" height="30" width="30" data-toggle="tooltip" data-placement="bottom" title="Shared To Dealer"></td>
-						<td><img src="../images/6_100ed1.png" height="30" width="30" data-toggle="tooltip" data-placement="bottom" title="Closed Dealer Communication (Buy)"></td>
-						<td><img src="../images/7_100ed1.png" height="30" width="30" data-toggle="tooltip" data-placement="bottom" title="Closed Dealer Communication (Not Buy)"></td>
-						<td><img src="../images/8ed.png" height="30" width="30" data-toggle="tooltip" data-placement="bottom" title="Save As Draft"></td>
-					</tr>
-					<tr>
-						<td><a style="padding:0px; text-decoration:none" id="tNRY">0</a></td>
-						<td><a style="padding:0px; text-decoration:none" id="tNR">0</a></td>
-						<td><a style="padding:0px; text-decoration:none" id="tO">0</a></td>
-						<td><a style="padding:0px; text-decoration:none" id="tCC">0</a></td>
-						<td><a style="padding:0px; text-decoration:none" id="tCCP">0</a></td>
-						<td><a style="padding:0px; text-decoration:none" id="tSD">0</a></td>
-						<td><a style="padding:0px; text-decoration:none" id="tCDB">0</a></td>
-						<td><a style="padding:0px; text-decoration:none" id="tCDNB">0</a></td>
-						<td><a style="padding:0px; text-decoration:none" id="tSAD">0</a></td>
-					</tr>
-				</table>
-                </div>
+               
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
 
-            
+            <!--div class="navbar-default sidebar" role="navigation">
+                
+                
+            </div-->
             <!-- /.navbar-static-side -->
         </nav>
+        <!-- baru -->
+        
 		
 		<div class="tab-content">
 		  <div id="home" class="tab-pane fade active in" style="">
@@ -1196,6 +1175,19 @@ org.json.JSONObject
             
 				
 			</div>
+			<footer>
+				<div style="display:block;position:fixed; width:100%; height:25px;bottom:0; background: #45484d; /* Old browsers */
+background: -moz-linear-gradient(top,  #45484d 0%, #000000 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#45484d), color-stop(100%,#000000)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #45484d 0%,#000000 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #45484d 0%,#000000 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #45484d 0%,#000000 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #45484d 0%,#000000 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */ border-top: 2px solid #286CD1; ">
+		
+			<a href="http://www.mataprima.com" style="margin:5px 5px 0 0; font-size:12px;float:right; color:#e5e5e5" target="_blank">Copyright © 2016 PT. Mata Prima Universal</a>
+		</div>
+			</footer>
 		 </div>
         <!-- tab-content -->
         <!-- /#page-wrapper -->

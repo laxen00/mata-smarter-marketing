@@ -795,15 +795,15 @@ function getStatusTotal() {
 	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 	    {
 		  var obj = JSON.parse(xmlhttp.responseText);
-		  document.getElementById('tNRY').innerHTML = obj.tNRY;
-		  document.getElementById('tNR').innerHTML = obj.tNR;
-		  document.getElementById('tO').innerHTML = obj.tO;
-		  document.getElementById('tCC').innerHTML = obj.tCC;
-		  document.getElementById('tCCP').innerHTML = obj.tCCP;
-		  document.getElementById('tSD').innerHTML = obj.tSD;
-		  document.getElementById('tCDB').innerHTML = obj.tCDB;
-		  document.getElementById('tCDNB').innerHTML = obj.tCDNB;
-		  document.getElementById('tSAD').innerHTML = obj.tSAD;
+		  document.getElementById('tNRY').innerHTML = 'Not Responded Yet(' + obj.tNRY + ')';
+		  document.getElementById('tNR').innerHTML = 'No Need To Reply(' +obj.tNR + ')';
+		  document.getElementById('tO').innerHTML = 'Ongoing(' + obj.tO + ')';
+		  document.getElementById('tCC').innerHTML = 'Closed Communication(' + obj.tCC + ')';
+		  document.getElementById('tCCP').innerHTML = 'Closed Communication By Phone(' + obj.tCCP + ')';
+		  document.getElementById('tSD').innerHTML = 'Shared To Dealer(' + obj.tSD + ')';
+		  document.getElementById('tCDB').innerHTML = 'Closed Dealer Communication (Buy)(' + obj.tCDB + ')';
+		  document.getElementById('tCDNB').innerHTML = 'Closed Dealer Communication (Not Buy)(' + obj.tCDNB + ')';
+		  document.getElementById('tSAD').innerHTML = 'Saved As Draft(' + obj.tSAD + ')';
 //		 document.getElementById('myModal12').style.display = 'none';
 	    }
 	}
