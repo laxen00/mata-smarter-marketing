@@ -186,23 +186,17 @@ org.json.JSONObject
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
   border-bottom: 3px solid #286CD1;">
             <div class="navbar-header">
-                <a class="navbar-brand" href="index.jsp">
+                <a class="navbar-brand" href="index.jsp" style="color:#E1E1D2">
                 	Mata Analytics Smarter Marketing
                 </a>
             </div>
             <!-- /.navbar-header -->
 			
             <ul class="nav navbar-top-links navbar-right">
-           <li class="dropdown navbar-right" style="margin-right:-10px">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#5e5e5e">
-                        <i class="fa fa-bell fa-fw"></i><span id="notifCount">0</span>  <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul id="notifs" class="dropdown-menu dropdown-alerts"></ul>
-
-                </li>
+           
            
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#5e5e5e">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#E1E1D2; ">
                         <% out.print(username); %><i class="fa fa-user fa-fw" style="margin-left:5px"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                    <ul class="dropdown-menu dropdown-user">
@@ -216,7 +210,13 @@ org.json.JSONObject
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
-               
+               <li class="dropdown navbar-right" style="margin-right:-10px">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:color:#E1E1D2; ">
+                        <i class="fa fa-bell fa-fw"></i><span id="notifCount">0</span>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul id="notifs" class="dropdown-menu dropdown-alerts"></ul>
+
+                </li>
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
@@ -331,9 +331,9 @@ org.json.JSONObject
             <div class="row" style="">
 				<!--baru-->
 				
-				<div class="col-lg-3" style="height: 572px">
+				<div class="col-lg-3" style="height: 550px">
                     <!-- /.panel -->
-                    <div class="chat-panel panel panel-default" style="height: 573px;margin-bottom: 0px;">
+                    <div class="chat-panel panel panel-default" style="height: 551px;margin-bottom: 0px;">
                         <div class="panel-heading">
                             
                             <i class="fa fa-filter fa-fw"></i>Filter
@@ -358,7 +358,7 @@ org.json.JSONObject
                             </div>
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body" style="height:480px">
+                        <div class="panel-body" style="height:458px">
 						
 						 
                                
@@ -505,13 +505,13 @@ org.json.JSONObject
 					
                 </div>
 				<!--baruuu-->
-				<div class="col-lg-9" style="height: 573px">
+				<div class="col-lg-9" style="height: 551px">
                     <!-- /.panel -->
                     <%
 //                     	int totalPage = DataClass.getTotalPage("");
 //                     	JSONArray arr = DataClass.getList(1);
                     %>
-                    <div class="chat-panel panel panel-default" style="height: 572px;margin-bottom: 0px;">
+                    <div class="chat-panel panel panel-default" style="height: 550px;margin-bottom: 0px;">
                         <div class="panel-heading">
                             <i class="fa fa-comments fa-fw"></i>
                             List
@@ -532,7 +532,7 @@ org.json.JSONObject
                             </div>
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body" style="height:480px">
+                        <div class="panel-body" style="height:458px">
 						
 						 
                                
@@ -1183,7 +1183,7 @@ background: -webkit-linear-gradient(top,  #45484d 0%,#000000 100%); /* Chrome10+
 background: -o-linear-gradient(top,  #45484d 0%,#000000 100%); /* Opera 11.10+ */
 background: -ms-linear-gradient(top,  #45484d 0%,#000000 100%); /* IE10+ */
 background: linear-gradient(to bottom,  #45484d 0%,#000000 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */ border-top: 2px solid #286CD1; ">
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */ border-top: 2px solid #286CD1;z-index:3 ">
 		
 			<a href="http://www.mataprima.com" style="margin:5px 5px 0 0; font-size:12px;float:right; color:#e5e5e5" target="_blank">Copyright © 2016 PT. Mata Prima Universal</a>
 		</div>
