@@ -59,7 +59,7 @@ public class DataClass {
 				 + "\"DATE\", \"QUERY\", \"SCORE\", \"SOURCE\", \"STATUS\","
 				 + "\"MESSAGE\", \"USERNAMELOGIN\", \"READSTATUS\", ROW_NUMBER() "
 				 + "OVER (ORDER BY \"DATE\" DESC) AS row_num "
-				 + "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA ";
+				 + "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA2 ";
 		
 		String end = ") AS p "
 				 + "WHERE p.row_num BETWEEN " + startingRow + " AND " + endRow;
@@ -168,7 +168,7 @@ public class DataClass {
 //		System.out.println("Database connected.");
 		
 		String q = "SELECT COUNT(1) AS TOTALROW "
-		 + "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA";
+		 + "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA2";
 		
 		if (searchQuery.length() > 0) {
 			JSONObject searchObj = new JSONObject(searchQuery);
@@ -229,10 +229,10 @@ public class DataClass {
 			sdf.applyPattern(SQL_DATE_FORMAT);
 			searchToDate = sdf.format(d);
 			if (!searchCategory.equalsIgnoreCase("") || !searchSource.equalsIgnoreCase("") || !searchStatus.equalsIgnoreCase("")) {
-				searchEntries = "(" + searchEntries + "POSTINGDATE BETWEEN '" + searchFromDate + "' AND '"+ searchToDate + "')";
+				searchEntries = "(" + searchEntries + "DATE BETWEEN '" + searchFromDate + "' AND '"+ searchToDate + "')";
 			}
 			else {
-				searchEntries = searchEntries + "POSTINGDATE BETWEEN '" + searchFromDate + "' AND '"+ searchToDate + "' ";
+				searchEntries = searchEntries + "DATE BETWEEN '" + searchFromDate + "' AND '"+ searchToDate + "' ";
 			}
 			
 			addAND = true;
@@ -246,7 +246,7 @@ public class DataClass {
 				d = c.getTime();
 				sdf.applyPattern(SQL_DATE_FORMAT);
 				searchFromDate = sdf.format(d);
-				searchEntries = searchEntries + "POSTINGDATE > '" + searchFromDate + "' ";
+				searchEntries = searchEntries + "DATE > '" + searchFromDate + "' ";
 				addAND = true;
 			}
 			if (!searchToDate.equalsIgnoreCase("")) {
@@ -259,7 +259,7 @@ public class DataClass {
 				searchFromDate = sdf.format(d);
 				if (addAND) searchEntries = searchEntries + " AND ";
 				else addAND = true;
-				searchEntries = searchEntries + "POSTINGDATE < '" + searchToDate + "' ";
+				searchEntries = searchEntries + "DATE < '" + searchToDate + "' ";
 			}
 		}
 		if (!searchCategory.equalsIgnoreCase("")) {
@@ -377,7 +377,7 @@ public class DataClass {
 				String q = "SELECT \"_ID\", \"BODY\", \"GENDER\", \"SCREENNAME\", \"NAME\","
 							 + "\"DATE\", \"QUERY\", \"SCORE\", \"SOURCE\", \"STATUS\","
 							 + "\"MESSAGE\", \"USERNAMELOGIN\", \"READSTATUS\" FROM "
-							 + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
+							 + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA2 "
 							 + "WHERE \"_ID\"='"+postid+"'";
 				
 //				System.out.println("Query: " + q);
@@ -458,7 +458,7 @@ public class DataClass {
 		Db2LookUp dblookup = new Db2LookUp();
 		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 		Connection con = dblookup.getConnected();
-		String q = "UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA SET "
+		String q = "UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA2 SET "
 				+ "\"ALERT\"=0 "
 				+ "WHERE \"_ID\"='"+postid+"'";
 		System.out.println(q);
@@ -545,7 +545,7 @@ public class DataClass {
 		String idParse = id;
 		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 		Connection con = dblookup.getConnected();
-		dblookup.executeStatement("UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA SET "
+		dblookup.executeStatement("UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA2 SET "
 				+ "STATUS='Saved As Draft', MESSAGE='"+message+"', USERNAMELOGIN='"+usernameLogin+"', READSTATUS='READ' "
 						+ "WHERE \"_ID\"='"+idParse+"'" , con);
 		dblookup.closeDB(con);
@@ -564,7 +564,7 @@ public class DataClass {
 			String idParse = id;
 			dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 			Connection con = dblookup.getConnected();
-			convs = dblookup.executeSelect("SELECT \"_ID\", MESSAGE FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
+			convs = dblookup.executeSelect("SELECT \"_ID\", MESSAGE FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA2 "
 					+ "WHERE \"_ID\"='"+idParse+"'", con, false);
 			dblookup.closeDB(con);
 			for(ArrayList<String> conv : convs){
@@ -618,7 +618,7 @@ public class DataClass {
 				String idParse = id;
 				dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 				String q = "SELECT SCREENNAME "
-						 + "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
+						 + "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA2 "
 						 + "WHERE \"_ID\"='"+idParse+"'";
 				Connection con = dblookup.getConnected();
 				Statement stmt = null;
@@ -649,7 +649,7 @@ public class DataClass {
 		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 		Connection con = dblookup.getConnected();
 		int currentReply = setReplytoCurrent(dblookup, con, idParse);
-		dblookup.executeStatement("UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA SET "
+		dblookup.executeStatement("UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA2 SET "
 				+ "STATUS='Ongoing', MESSAGE='"+message+"', USERNAMELOGIN='"+usernameLogin+"', READSTATUS='READ', \"ALERT\"=0, UPDATEDATE="+millis+", \"REPLY\"="+currentReply+" "
 						+ "WHERE \"_ID\"='"+idParse+"'" , con);
 		dblookup.closeDB(con);
@@ -659,7 +659,7 @@ public class DataClass {
 	private static int setReplytoCurrent(Db2LookUp dblookup, Connection con, String idParse) throws Exception{
 		JSONObject confObj = config.getPropValues();
 		ArrayList<ArrayList<String>> convs = new ArrayList<ArrayList<String>>();
-		convs = dblookup.executeSelect("SELECT \"REPLY\" FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
+		convs = dblookup.executeSelect("SELECT \"REPLY\" FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA2 "
 				+ "WHERE \"_ID\"='"+idParse+"'", con, false);
 		for(ArrayList<String> conv : convs){
 			String out = conv.get(0);
@@ -694,7 +694,7 @@ public class DataClass {
 		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 		Connection con = dblookup.getConnected();
 		try {
-			String q = "UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA SET "
+			String q = "UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA2 SET "
 					+ "STATUS='"+status+"' "
 					+ "WHERE \"_ID\"='"+idParse+"'";
 //			System.out.println(q);
@@ -717,14 +717,14 @@ public class DataClass {
 //		String idParse = id;
 		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 		Connection con = dblookup.getConnected();
-		convs = dblookup.executeSelect("SELECT COUNT(1) FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
+		convs = dblookup.executeSelect("SELECT COUNT(1) FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA2 "
 				+ "WHERE STATUS IS NULL", con, false);
 		for(ArrayList<String> conv : convs) {
 //			System.out.println(conv);
 			int total = Integer.parseInt(conv.get(0));
 			if (total>0){
 				System.out.println("null status found, set all to Not Responded Yet");
-				dblookup.executeStatement("UPDATE "+ confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
+				dblookup.executeStatement("UPDATE "+ confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA2 "
 						+ "SET STATUS='Not Responded Yet' WHERE STATUS IS NULL", con);
 			}
 			break;
@@ -766,7 +766,7 @@ public class DataClass {
 				+ "sum(case when STATUS='Closed Dealer Communication (Buy)' then 1 end) as tBuy, "
 				+ "sum(case when STATUS='Closed Dealer Communication (Not Buy)' then 1 end) as tNotBuy, "
 				+ "sum(case when STATUS='Saved As Draft' then 1 end) as tSAD "
-				+ "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA";
+				+ "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA2";
 		System.out.println("Query: " + q);
 		lists = dblookup.executeSelect(q, con, false);
 		
@@ -790,7 +790,7 @@ public class DataClass {
 		JSONObject confObj = config.getPropValues();
 		ArrayList<ArrayList<String>> convs = new ArrayList<ArrayList<String>>();
 		try {
-			convs = dblookup.executeSelect("SELECT STATUS FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
+			convs = dblookup.executeSelect("SELECT STATUS FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA2 "
 					+ "WHERE \"_ID\"='"+id+"'", con, false);
 			for(ArrayList<String> conv : convs){
 				String status = conv.get(0);
@@ -813,7 +813,7 @@ public class DataClass {
 			String q = "SELECT \"_ID\", \"BODY\", \"GENDER\", \"SCREENNAME\", \"NAME\","
 					 + "\"DATE\", \"QUERY\", \"SCORE\", \"SOURCE\", \"STATUS\","
 					 + "\"MESSAGE\", \"USERNAMELOGIN\", \"READSTATUS\" FROM "
-					 + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
+					 + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA2 "
 					 + "WHERE \"\"ALERT\"\"=1 ORDER BY \"DATE\" DESC";
 			results = dblookup.executeSelect(q, con, false);
 //			System.out.println(q);

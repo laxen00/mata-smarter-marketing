@@ -321,7 +321,7 @@ public class KaskusClass {
 		if(id.length()<2){
 			id = "0";
 		}
-		convs = dblookup.executeSelect("SELECT SCREENNAME, POSTINGDATESTR, TEXT_CONTENT, MESSAGE, POSTURL FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
+		convs = dblookup.executeSelect("SELECT SCREENNAME, POSTINGDATESTR, TEXT_CONTENT, MESSAGE, POSTURL FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA2"
 				+ "WHERE ID="+id+"", con, false);
 		dblookup.closeDB(con);
 		for(ArrayList<String> conv : convs) {
@@ -336,7 +336,7 @@ public class KaskusClass {
 		Db2LookUp dblookup = new Db2LookUp();
 		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 		Connection con = dblookup.getConnected();
-		convs = dblookup.executeSelect("SELECT PHOTOURL FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
+		convs = dblookup.executeSelect("SELECT PHOTOURL FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA2"
 				+ "WHERE SCREENNAME='"+screenName+"'", con, false);
 		dblookup.closeDB(con);
 		for(ArrayList<String> conv : convs) {

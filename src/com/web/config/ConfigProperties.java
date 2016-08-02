@@ -36,6 +36,7 @@ public class ConfigProperties {
 			String schema = prop.getProperty("schema");
 			String dbuser = prop.getProperty("dbuser");
 			String dbpass = prop.getProperty("dbpass");
+			String maintable = prop.getProperty("maintable");
 			String consumerKey = prop.getProperty("consumerKey");
 			String consumerSecret = prop.getProperty("consumerSecret");
 			String oauthToken = prop.getProperty("oauthToken");
@@ -53,6 +54,7 @@ public class ConfigProperties {
 			obj.put("schema", schema);
 			obj.put("dbuser", dbuser);
 			obj.put("dbpass", dbpass);
+			obj.put("maintable", maintable);
 			obj.put("consumerKey", consumerKey);
 			obj.put("consumerSecret", consumerSecret);
 			obj.put("oauthToken", oauthToken);
