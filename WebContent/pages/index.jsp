@@ -1086,6 +1086,7 @@ org.json.JSONObject
 		  <li class="active"><a data-toggle="tab" href="#twittertab" onclick="changeValidate(0)"><i class="fa fa-comments fa-fw"></i>
                             Twitter</a></li>
 		  <li><a id="privateChat" name="privateChatName" data-toggle="tab" href="#kaskustab" onclick="changeValidate(1)">Kaskus</a></li>
+		  <li><a id="facebooktab" name="facebooktab" data-toggle="tab" href="#facebooktab" onclick="changeValidate(2)">Facebook</a></li>
 		</ul>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         
@@ -1124,6 +1125,28 @@ org.json.JSONObject
 		<input id="pw" type="password" value="<% out.print(kaskusPass); %>" class="form-control" required placeholder="Password" style="width:70%; display:block">
 	  </div>	  
 	  </div>
+	  <div id="facebooktab" class="tab-pane">
+	  <div class="form-group" >
+		<form data-toggle="validator" role="form">
+        <div class="form-group" >
+		<div id="container-nael1">
+		<div style="margin-bottom:5px">
+		<label>Consumer Key</label>
+		<input id="ck" type="email" value="<% out.print(consumerKey); %>" class="form-control" required placeholder="Consumer Key" style="width:70%; display:inline-block; margin:0px 0px 3px 45px">
+		<label>Consumer Secret</label>
+		<input id="cs" type="email" value="<% out.print(consumerSecret); %>" class="form-control" required placeholder="Consumer Secret" style="width:70%; display:inline-block; margin:0px 0px 3px 28px"><br>
+		<label>Access Token</label>
+		<input id="at" type="email" value="<% out.print(oauthToken); %>" class="form-control" required placeholder="Access Token" style="width:70%; display:inline-block; margin:0px 0px 3px 48px"><br>
+		<label>Access Token Secret</label>
+		<input id="ats" type="email" value="<% out.print(oauthSecret); %>" class="form-control" required placeholder="Access Token Secret" style="width:70%; display:inline-block; margin:0px 0px 3px 1px"><br>
+		</div>
+			
+		
+		</div>
+		<button id="addface" type="button" class="btn btn-info" style="display:none; margin-bottom:3px">Add</button>
+		</form>
+		</div>
+      </div>
 	  </div>
 	  </div>
       <div class="modal-footer" style="text-align:left">
