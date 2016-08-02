@@ -194,7 +194,13 @@ org.json.JSONObject
 			
             <ul class="nav navbar-top-links navbar-right">
            
-           
+           		 <li class="dropdown" style="margin-right:-10px">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#E1E1D2; ">
+                        <i class="fa fa-bell fa-fw"></i><span id="notifCount">0</span>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul id="notifs" class="dropdown-menu dropdown-alerts"></ul>
+
+                </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#E1E1D2; ">
                         <% out.print(username); %><i class="fa fa-user fa-fw" style="margin-left:5px"></i>  <i class="fa fa-caret-down"></i>
@@ -210,13 +216,7 @@ org.json.JSONObject
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
-               <li class="dropdown navbar-right" style="margin-right:-10px">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:color:#E1E1D2; ">
-                        <i class="fa fa-bell fa-fw"></i><span id="notifCount">0</span>  <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul id="notifs" class="dropdown-menu dropdown-alerts"></ul>
-
-                </li>
+              
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
