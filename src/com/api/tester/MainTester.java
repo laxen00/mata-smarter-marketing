@@ -1,5 +1,6 @@
 package com.api.tester;
 
+import java.net.URLDecoder;
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -26,36 +27,32 @@ public class MainTester {
 	static Connection con;
 	
 	public static void main(String[] args) throws Exception {
-//			TwitterClass twitter = new TwitterClass();
-//			long id = TwitterClass.getStatusIdFromUrl("https://twitter.com/nahel101819/status/705945504899674112");
-//			Status s = twitter.twitter.showStatus(id);
-//			System.out.println(s);
-//		JSONObject dbObj = config.getPropValues();
-//		Db2LookUp dblookup = new Db2LookUp();
-//		dblookup.setData(dbObj.getString("hostname"), dbObj.getString("dbname"), dbObj.getString("dbuser"), dbObj.getString("dbpass"));
-//		con = dblookup.getConnected();
-//		String q = "{" 
-//				+ "\"searchFromDate\" : \"\","
-//				+ "\"searchToDate\" : \"\","
-//				+ "\"searchCategory\" : \"\","
-//				+ "\"searchSource\" : \"\","
-//				+ "\"searchStatus\" : \"\","
-//				+ "\"searchSentiment\" : \"\""
-//				+ "}";
-//		JSONArray arr = DataClass.getList(1,q);
-//		System.out.println(arr);
-		ArrayList<Integer> totalArray = new ArrayList<Integer>();
-		JSONObject obj = new JSONObject();
-		String[] names = {"tNRY","tNR","tO","tCC","tCCP","tSD","tCDB","tCDNB","tSAD"};
+		
+		String username = "administrator";
+		String password = "password";
+		JSONObject user = new JSONObject();
+		
+		username = username.toUpperCase();
+		int result = UserClass.login(username, password);
+		if (result == 1) {
+			user = UserClass.getSetting(username);
+		}
+		else {
+			System.out.println("error.");
+		}
+		
+		String url = "https://twitter.com/listiarinirahay/status/758560987020603392";
+//	 	String url = "https://twitter.com/ice1217/status/692197182150148096";
+		String type = "Twitter";
+		String id = "https://twitter.com/listiarinirahay/status/758560987020603392";
+		url = URLDecoder.decode(url, "UTF-8");
+		System.out.println(url);
+		JSONArray arr = new JSONArray();
 		try {
-			totalArray = DataClass.listCurrentStatusDocs();
-			for (int i=0;i<totalArray.size();i++) {
-				obj.put(names[i], totalArray.get(i));
-			}
+			arr = DataClass.getConversationJSON(id, url, type, user);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Total => " + obj.toString());
 	}
-	}
+}

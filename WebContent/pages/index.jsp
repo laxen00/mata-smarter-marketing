@@ -450,15 +450,15 @@ org.json.JSONObject
 										 <div class="form-group">
                                             <label><u>Status</u></label>
                                             <select id ="searchStatus" multiple class="form-control" style="height:90px">
-                                                <option id="tNRY">Not Responded Yet</option>
-                                                <option id="tNR">No Need To Reply</option>
-                                                <option id="tO">Ongoing</option>
-                                                <option id="tCC">Closed Communication</option>
-                                                <option id="tCCP">Closed Communication By Phone</option>
-                                                <option id="tSD">Shared To Dealer</option>
-                                                <option id="tCDB">Closed Dealer Communication (Buy)</option>
-                                                <option id="tCDNB">Closed Dealer Communication (Not Buy)</option>
-                                                <option id="tSAD">Saved As Draft</option>
+                                                <option id="tNRY" value="Not Responded Yet">Not Responded Yet</option>
+                                                <option id="tNR" value="No Need To Reply">No Need To Reply</option>
+                                                <option id="tO" value="Ongoing">Ongoing</option>
+                                                <option id="tCC" value="Closed Communication">Closed Communication</option>
+                                                <option id="tCCP" value="Closed Communication By Phone">Closed Communication By Phone</option>
+                                                <option id="tSD" value="Shared To Dealer">Shared To Dealer</option>
+                                                <option id="tCDB" value="Closed Dealer Communication (Buy)">Closed Dealer Communication (Buy)</option>
+                                                <option id="tCDNB" value="Closed Dealer Communication (Not Buy)">Closed Dealer Communication (Not Buy)</option>
+                                                <option id="tSAD" value="Saved As Draft">Saved As Draft</option>
                                             </select>
                                         </div>
 										 

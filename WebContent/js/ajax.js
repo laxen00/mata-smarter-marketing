@@ -51,7 +51,7 @@ function getList(input, username, updateBool) {
 	    opt = options[i];
 
 	    if (opt.selected) {
-	    	if (opt.text != '') selectedItem.push(opt.text);
+	    	if (opt.value != '') selectedItem.push(opt.value);
 	    }
 	}
 	for (var i=0; i<selectedItem.length; i++) {

@@ -376,7 +376,9 @@ public class DataClass {
 				
 				String q = "SELECT \"_ID\", \"BODY\", \"GENDER\", \"SCREENNAME\", \"NAME\","
 							 + "\"DATE\", \"QUERY\", \"SCORE\", \"SOURCE\", \"STATUS\","
-							 + "\"MESSAGE\", \"USERNAMELOGIN\", \"READSTATUS\" FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA WHERE ID="+postid;
+							 + "\"MESSAGE\", \"USERNAMELOGIN\", \"READSTATUS\" FROM "
+							 + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
+							 + "WHERE \"_ID\"='"+postid+"'";
 				
 //				System.out.println("Query: " + q);
 				
@@ -457,8 +459,8 @@ public class DataClass {
 		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 		Connection con = dblookup.getConnected();
 		String q = "UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA SET "
-				+ "ALERT=0 "
-				+ "WHERE _ID="+postid+"";
+				+ "\"ALERT\"=0 "
+				+ "WHERE \"_ID\"='"+postid+"'";
 		System.out.println(q);
 		dblookup.executeStatement(q, con);
 		dblookup.closeDB(con);
@@ -540,12 +542,12 @@ public class DataClass {
 		System.out.println("save to draft as user: "+usernameLogin);
 		JSONObject confObj = config.getPropValues();
 		Db2LookUp dblookup = new Db2LookUp();
-		int idParse = Integer.valueOf(id);
+		String idParse = id;
 		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 		Connection con = dblookup.getConnected();
 		dblookup.executeStatement("UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA SET "
 				+ "STATUS='Saved As Draft', MESSAGE='"+message+"', USERNAMELOGIN='"+usernameLogin+"', READSTATUS='READ' "
-						+ "WHERE _ID="+idParse+"" , con);
+						+ "WHERE \"_ID\"='"+idParse+"'" , con);
 		dblookup.closeDB(con);
 		return true;
 	}
@@ -559,11 +561,11 @@ public class DataClass {
 			ArrayList<ArrayList<String>> convs = new ArrayList<ArrayList<String>>();
 			JSONObject confObj = config.getPropValues();
 			Db2LookUp dblookup = new Db2LookUp();
-			int idParse = Integer.valueOf(id);
+			String idParse = id;
 			dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 			Connection con = dblookup.getConnected();
-			convs = dblookup.executeSelect("SELECT _ID, MESSAGE FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
-					+ "WHERE _ID="+idParse+"", con, false);
+			convs = dblookup.executeSelect("SELECT \"_ID\", MESSAGE FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
+					+ "WHERE \"_ID\"='"+idParse+"'", con, false);
 			dblookup.closeDB(con);
 			for(ArrayList<String> conv : convs){
 				message = conv.get(1);
@@ -588,7 +590,7 @@ public class DataClass {
 			}
 		}
 		else {
-			String title = "REPLY";
+			String title = "\"REPLY\"";
 			reply = UserClass.kc.postReply(url, title, message, userlogin.getString("kaskusUser"), userlogin.getString("kaskusPass"));
 		}
 		if (reply) {
@@ -613,11 +615,11 @@ public class DataClass {
 				out = UserClass.kc.sendDM(userlogin.getString("kaskusUser"), userlogin.getString("kaskusPass"), message, screenname);
 			}
 			else{
-				int idParse = Integer.valueOf(id);
+				String idParse = id;
 				dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 				String q = "SELECT SCREENNAME "
 						 + "FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
-						 + "WHERE _ID="+idParse;
+						 + "WHERE \"_ID\"='"+idParse+"'";
 				Connection con = dblookup.getConnected();
 				Statement stmt = null;
 				ResultSet rset;
@@ -643,22 +645,22 @@ public class DataClass {
 		
 		JSONObject confObj = config.getPropValues();
 		Db2LookUp dblookup = new Db2LookUp();
-		int idParse = Integer.valueOf(id);
+		String idParse = id;
 		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 		Connection con = dblookup.getConnected();
 		int currentReply = setReplytoCurrent(dblookup, con, idParse);
 		dblookup.executeStatement("UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA SET "
-				+ "STATUS='Ongoing', MESSAGE='"+message+"', USERNAMELOGIN='"+usernameLogin+"', READSTATUS='READ', ALERT=0, UPDATEDATE="+millis+", REPLY="+currentReply+" "
-						+ "WHERE _ID="+idParse+"" , con);
+				+ "STATUS='Ongoing', MESSAGE='"+message+"', USERNAMELOGIN='"+usernameLogin+"', READSTATUS='READ', \"ALERT\"=0, UPDATEDATE="+millis+", \"REPLY\"="+currentReply+" "
+						+ "WHERE \"_ID\"='"+idParse+"'" , con);
 		dblookup.closeDB(con);
 		return true;
 	}
 	
-	private static int setReplytoCurrent(Db2LookUp dblookup, Connection con, int idParse) throws Exception{
+	private static int setReplytoCurrent(Db2LookUp dblookup, Connection con, String idParse) throws Exception{
 		JSONObject confObj = config.getPropValues();
 		ArrayList<ArrayList<String>> convs = new ArrayList<ArrayList<String>>();
-		convs = dblookup.executeSelect("SELECT REPLY FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
-				+ "WHERE _ID="+idParse+"", con, false);
+		convs = dblookup.executeSelect("SELECT \"REPLY\" FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
+				+ "WHERE \"_ID\"='"+idParse+"'", con, false);
 		for(ArrayList<String> conv : convs){
 			String out = conv.get(0);
 			try{
@@ -687,14 +689,14 @@ public class DataClass {
 		boolean out = false;
 		JSONObject confObj = config.getPropValues();
 		Db2LookUp dblookup = new Db2LookUp();
-		int idParse = Integer.valueOf(id);
+		String idParse = id;
 		String status = STATUS_NAMES[num];
 		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 		Connection con = dblookup.getConnected();
 		try {
 			String q = "UPDATE " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA SET "
 					+ "STATUS='"+status+"' "
-					+ "WHERE _ID="+idParse+"";
+					+ "WHERE \"_ID\"='"+idParse+"'";
 //			System.out.println(q);
 			dblookup.executeStatement(q, con);
 			dblookup.closeDB(con);
@@ -712,7 +714,7 @@ public class DataClass {
 		ArrayList<ArrayList<String>> convs = new ArrayList<ArrayList<String>>();
 		JSONObject confObj = config.getPropValues();
 		Db2LookUp dblookup = new Db2LookUp();
-//		int idParse = Integer.valueOf(id);
+//		String idParse = id;
 		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 		Connection con = dblookup.getConnected();
 		convs = dblookup.executeSelect("SELECT COUNT(1) FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
@@ -751,7 +753,7 @@ public class DataClass {
 		ArrayList<Integer> dataList = new ArrayList<Integer>();
 		JSONObject confObj = config.getPropValues();
 		Db2LookUp dblookup = new Db2LookUp();
-//		int idParse = Integer.valueOf(id);
+//		String idParse = id;
 		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 		Connection con = dblookup.getConnected();
 		
@@ -789,7 +791,7 @@ public class DataClass {
 		ArrayList<ArrayList<String>> convs = new ArrayList<ArrayList<String>>();
 		try {
 			convs = dblookup.executeSelect("SELECT STATUS FROM " + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
-					+ "WHERE _ID="+id+"", con, false);
+					+ "WHERE \"_ID\"='"+id+"'", con, false);
 			for(ArrayList<String> conv : convs){
 				String status = conv.get(0);
 				if (status.equalsIgnoreCase("Saved As Draft")) drafted = 1;
@@ -812,7 +814,7 @@ public class DataClass {
 					 + "\"DATE\", \"QUERY\", \"SCORE\", \"SOURCE\", \"STATUS\","
 					 + "\"MESSAGE\", \"USERNAMELOGIN\", \"READSTATUS\" FROM "
 					 + confObj.getString("dbname") + "." + confObj.getString("schema") + ".SAHABATSAMPOERNA "
-					 + "WHERE \"ALERT\"=1 ORDER BY \"DATE\" DESC";
+					 + "WHERE \"\"ALERT\"\"=1 ORDER BY \"DATE\" DESC";
 			results = dblookup.executeSelect(q, con, false);
 //			System.out.println(q);
 			String[] colNames = {
@@ -936,7 +938,7 @@ public class DataClass {
 //		ArrayList<ArrayList<String>> lists = new ArrayList<ArrayList<String>>();
 //		JSONObject confObj = config.getPropValues();
 //		Db2LookUp dblookup = new Db2LookUp();
-////		int idParse = Integer.valueOf(id);
+////		String idParse = id;
 //		dblookup.setData(confObj.getString("hostname"), confObj.getString("dbname"), confObj.getString("dbuser"), confObj.getString("dbpass"));
 //		Connection con = dblookup.getConnected();
 //		lists = dblookup.executeSelect("SELECT USERNAMELOGIN, USERNAME, PASSWORD, CONSUMERKEY, CONSUMERSECRET, ACCESSTOKEN, ACCESSTOKENSECRET "
