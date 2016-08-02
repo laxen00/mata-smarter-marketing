@@ -52,7 +52,7 @@ org.json.JSONObject
     <title>Mata Smarter Marketing Portal</title>
 
     <!-- Bootstrap Core CSS -->
-    <link rel="icon" type="image/png" href="../images/ticon.png" />
+<!--     <link rel="icon" type="image/png" href="../images/ticon.png" /> -->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../bower_components/bootstrap/dist/css/spinner.css" rel="stylesheet">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -160,11 +160,7 @@ org.json.JSONObject
 <script type="text/javascript" src="../js/ajax.js"></script>
 </head>
 
-<body style="
-    background: url('../images/background1_ed.jpg') no-repeat center center fixed;-webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;">
+<body>
 	<%
 		if (kaskusUser.equalsIgnoreCase("N/A")
 		||	kaskusPass.equalsIgnoreCase("N/A")
@@ -188,7 +184,7 @@ org.json.JSONObject
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.jsp"><img src="../images/matasmarterlogo.png" height="40" width="290" style="margin-top:-10px; margin-left:-5px"></a>
+                <a class="navbar-brand" href="index.jsp"><img src="../images/matasmarterlogo.png" height="75" width="245" style="margin-top:-22px; margin-left:-5px; margin-right: -10px"></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -469,7 +465,7 @@ org.json.JSONObject
                                             <label><u>Source</u></label>
                                             <select id="searchSource" multiple class="form-control" style="height:60px">
                                                 <option>Twitter</option>
-                                                <option>www.kaskus.co.id</option>
+                                                
                                             </select>
                                         </div>
 										 <div class="form-group">
