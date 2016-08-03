@@ -449,7 +449,7 @@ org.json.JSONObject
                                         </div>
 										 <div class="form-group">
                                             <label><u>Status</u></label>
-                                            <select id ="searchStatus" multiple class="form-control" style="height:90px; overflow-x:scroll">
+                                            <select id ="searchStatus" multiple class="form-control" style="height:90px; overflow-x:scroll;">
                                                 <option id="tNRY" title="Not Responded Yet" value="Not Responded Yet">Not Responded Yet</option>
                                                 <option id="tNR" title="No Need To Reply" value="No Need To Reply">No Need To Reply</option>
                                                 <option id="tO" title="Ongoing" value="Ongoing">Ongoing</option>
