@@ -489,11 +489,13 @@ function sendReply(id, url, type, username, status) {
 	xmlhttp.onreadystatechange=function() {
 	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 	    {
-		  	document.getElementById('conversation').innerHTML = '';
-		    url = decodeURIComponent(url);
-		  	setTimeout(getConversation2(id, url, type, username, status), 1000);
-//		  	document.getElementById('myModal12').style.display = 'none';
-			
+		  	if (xmlhttp.responseText == 'notset') alert('Please review your Kaskus and Twitter settings');
+		  	else {
+			  	document.getElementById('conversation').innerHTML = '';
+			    url = decodeURIComponent(url);
+			  	setTimeout(getConversation2(id, url, type, username, status), 1000);
+//			  	document.getElementById('myModal12').style.display = 'none';
+		  	}
 	    }
 	}
 //	xmlhttp.open("GET","../api/sendReply.jsp?url="+url+"&type="+type+"&username="+username+"&id="+id+"&text="+text,true);
@@ -513,15 +515,17 @@ function sendDM(id, url, type, username, status) {
 	var xmlhttp=new XMLHttpRequest();
 	xmlhttp.onreadystatechange=function() {
 	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-	    {	
-		  	if (xmlhttp.responseText == false || xmlhttp.responseText == 'false') {
-		  		alert("Error in sending DM; is the user currently following you?");
+	    {
+		  	if (xmlhttp.responseText == 'notset') alert('Please review your Kaskus and Twitter settings');
+		  	else {
+			  	if (xmlhttp.responseText == false || xmlhttp.responseText == 'false') {
+			  		alert("Error in sending DM; is the user currently following you?");
+			  	}
+			  	document.getElementById('conversation').innerHTML = '';
+			    url = decodeURIComponent(url);
+			  	setTimeout(getConversation(id, url, type, username, status), 1000);
+//			  	document.getElementById('myModal12').style.display = 'none';
 		  	}
-		  	document.getElementById('conversation').innerHTML = '';
-		    url = decodeURIComponent(url);
-		  	setTimeout(getConversation(id, url, type, username, status), 1000);
-//		  	document.getElementById('myModal12').style.display = 'none';
-			
 	    }
 	}
 //	xmlhttp.open("GET","../api/sendReply.jsp?url="+url+"&type="+type+"&username="+username+"&id="+id+"&text="+text,true);
@@ -537,9 +541,12 @@ function sendRetweet(postUrl, id, url, type, username, status) {
 	xmlhttp.onreadystatechange=function() {
 	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 	    {
-		  document.getElementById('conversation').innerHTML = '';
-		  url = decodeURIComponent(url);
-		  setTimeout(getConversation(id, url, type, username, status), 1000);
+		  if (xmlhttp.responseText == 'notset') alert('Please review your Kaskus and Twitter settings');
+		  else {
+			  document.getElementById('conversation').innerHTML = '';
+			  url = decodeURIComponent(url);
+			  setTimeout(getConversation(id, url, type, username, status), 1000);
+		  }
 	    }
 	}
 	xmlhttp.open("POST","../api/sendRetweet.jsp",true);

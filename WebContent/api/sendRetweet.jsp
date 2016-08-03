@@ -13,13 +13,27 @@ java.net.URLDecoder
 // 	String postUrl = "https://twitter.com/dnaelw/status/689351613387915266";
 	postUrl = URLDecoder.decode(postUrl, "UTF-8");
 	System.out.println(postUrl);
-	boolean retweet = false;
-	try {
-		retweet = DataClass.sendRetweet(postUrl, user);
+	
+	String retweetString = "";
+
+	if (user.getString("kaskusUser").equalsIgnoreCase("N/A")
+	||	user.getString("kaskusPass").equalsIgnoreCase("N/A")
+	||	user.getString("consumerKey").equalsIgnoreCase("N/A")
+	||	user.getString("consumerSecret").equalsIgnoreCase("N/A")
+	||	user.getString("oauthToken").equalsIgnoreCase("N/A")
+	||	user.getString("oauthSecret").equalsIgnoreCase("N/A")) {
+		retweetString = "notset";
 	}
-	catch (Exception e) {
-		e.printStackTrace();
+	else {
+		boolean retweet = false;
+		try {
+			retweet = DataClass.sendRetweet(postUrl, user);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		retweetString = Boolean.toString(retweet);
 	}
-	System.out.println("Retweet => " + retweet);
-	out.print(retweet);
+	System.out.println("Retweet => " + retweetString);
+	out.print(retweetString);
 %>
