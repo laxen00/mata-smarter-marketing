@@ -396,7 +396,7 @@ public class DataClass {
 					obj.put("tweetId", id);
 					obj.put("isRetweeted", "false");
 					obj.put("postUrl", url);
-					obj.put("notThisUser", "false");
+					obj.put("notThisUser", "true");
 					arr.put(obj);
 				}
 				dblookup.closeDB(con);
@@ -447,7 +447,7 @@ public class DataClass {
 					obj.put("tweetId", "");
 					obj.put("isRetweeted", "false");
 					obj.put("postUrl", url);
-					obj.put("notThisUser", "false");
+					obj.put("notThisUser", "true");
 					arr.put(obj);
 				}
 			}

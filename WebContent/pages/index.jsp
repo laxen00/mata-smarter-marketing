@@ -1010,7 +1010,7 @@ org.json.JSONObject
                                     <i class="fa fa-image fa-fw"></i>
                                     </button>
 									</div>
-                                    <button id="sendButton" type="button" class="btn btn-primary btn-sm" id="btn-chat" disabled>
+                                    <button id="sendButton" type="button" class="btn btn-primary btn-sm" id="btn-chat" onclick="" disabled>
                                         Send
                                     </button> 
 									<button type="button" class="btn btn-sm" data-dismiss="modal">Close</button>
@@ -1236,14 +1236,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', end
     <script src="../js/morris-data.js"></script>
 
     <!-- Custom Theme JavaScript -->
-<!--     <div id="test111"></div> -->
+    <div id="test111"></div>
 	<div id="sound"></div>
     <script src="../dist/js/sb-admin-2.js"></script>
     <script src="../js/uploadMedia.js"></script>
 	<script>getList(1,'<% out.print(username); %>','true');</script>
 	<script>checkNotif('<% out.print(username); %>');</script>
 	<script>refreshNotif('<% out.print(username); %>');</script>
-	
 </body>
 
 </html>

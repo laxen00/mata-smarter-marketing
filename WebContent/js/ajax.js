@@ -478,7 +478,7 @@ function getDM(id, url, type, username, status) {
 }
 
 function sendReply(id, url, type, username, status) {
-	document.getElementById('conversation').innerHTML = "";
+//	document.getElementById('conversation').innerHTML = "";
 	document.getElementById('myModal12').style.display = 'inline';
 	var mediaPath = document.getElementById('mediaPath').value;
 	var text = '';
@@ -489,7 +489,11 @@ function sendReply(id, url, type, username, status) {
 	xmlhttp.onreadystatechange=function() {
 	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 	    {
-		  	if (xmlhttp.responseText == 'notset') alert('Please review your Kaskus and Twitter settings');
+		  	var resp = xmlhttp.responseText.trim();
+		  	if (resp == 'notset') {
+		  		alert('Please review your Kaskus and Twitter settings');
+		  		document.getElementById('myModal12').style.display = 'none';
+		  	}
 		  	else {
 			  	document.getElementById('conversation').innerHTML = '';
 			    url = decodeURIComponent(url);
@@ -506,7 +510,7 @@ function sendReply(id, url, type, username, status) {
 }
 
 function sendDM(id, url, type, username, status) {
-	document.getElementById('conversation').innerHTML = "";
+//	document.getElementById('conversation').innerHTML = "";
 	document.getElementById('myModal12').style.display = 'inline';
 	var text = '';
 	if (type == 'Twitter' || type == 'twitter') text = document.getElementById("btn-input2").value;
@@ -516,7 +520,11 @@ function sendDM(id, url, type, username, status) {
 	xmlhttp.onreadystatechange=function() {
 	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 	    {
-		  	if (xmlhttp.responseText == 'notset') alert('Please review your Kaskus and Twitter settings');
+		  	var resp = xmlhttp.responseText.trim();
+		  	if (resp == 'notset') {
+		  		alert('Please review your Kaskus and Twitter settings');
+		  		document.getElementById('myModal12').style.display = 'none';
+		  	}
 		  	else {
 			  	if (xmlhttp.responseText == false || xmlhttp.responseText == 'false') {
 			  		alert("Error in sending DM; is the user currently following you?");
@@ -541,7 +549,11 @@ function sendRetweet(postUrl, id, url, type, username, status) {
 	xmlhttp.onreadystatechange=function() {
 	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 	    {
-		  if (xmlhttp.responseText == 'notset') alert('Please review your Kaskus and Twitter settings');
+		  var resp = xmlhttp.responseText.trim();
+		  if (resp == 'notset') {
+		  		alert('Please review your Kaskus and Twitter settings');
+		  		document.getElementById('myModal12').style.display = 'none';
+		  	}
 		  else {
 			  document.getElementById('conversation').innerHTML = '';
 			  url = decodeURIComponent(url);
