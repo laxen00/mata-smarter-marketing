@@ -800,9 +800,9 @@ function getStatusTotal() {
 		  document.getElementById('tO').innerHTML = 'Ongoing(' + obj.tO + ')';
 		  document.getElementById('tCC').innerHTML = 'Closed Communication(' + obj.tCC + ')';
 		  document.getElementById('tCCP').innerHTML = 'Closed Communication By Phone(' + obj.tCCP + ')';
-		  document.getElementById('tSD').innerHTML = 'Shared To Dealer(' + obj.tSD + ')';
-		  document.getElementById('tCDB').innerHTML = 'Closed Dealer Communication (Buy)(' + obj.tCDB + ')';
-		  document.getElementById('tCDNB').innerHTML = 'Closed Dealer Communication (Not Buy)(' + obj.tCDNB + ')';
+//		  document.getElementById('tSD').innerHTML = 'Shared To Dealer(' + obj.tSD + ')';
+//		  document.getElementById('tCDB').innerHTML = 'Closed Dealer Communication (Buy)(' + obj.tCDB + ')';
+//		  document.getElementById('tCDNB').innerHTML = 'Closed Dealer Communication (Not Buy)(' + obj.tCDNB + ')';
 		  document.getElementById('tSAD').innerHTML = 'Saved As Draft(' + obj.tSAD + ')';
 //		 document.getElementById('myModal12').style.display = 'none';
 	    }
