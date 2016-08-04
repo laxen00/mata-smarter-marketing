@@ -144,6 +144,10 @@ org.json.JSONObject
 	      elements[i].selected = false;
 	    }
 	  }
+	
+	function settingsAlert() {
+		alert('Please review your user settings');
+	}
 </script>
 <script type="text/javascript">
             // @param filename The name of the file WITHOUT ending
@@ -169,7 +173,7 @@ org.json.JSONObject
 		||	oauthToken.equalsIgnoreCase("N/A")
 		||	oauthSecret.equalsIgnoreCase("N/A")) {
 	%>
-	<script>alert('Please review your Kaskus and Twitter settings');</script>
+	<script>settingsAlert();</script>
 	<%
 		}
 	%>

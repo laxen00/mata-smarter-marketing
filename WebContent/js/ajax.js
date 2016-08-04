@@ -491,7 +491,7 @@ function sendReply(id, url, type, username, status) {
 	    {
 		  	var resp = xmlhttp.responseText.trim();
 		  	if (resp == 'notset') {
-		  		alert('Please review your Kaskus and Twitter settings');
+		  		settingsAlert();
 		  		document.getElementById('myModal12').style.display = 'none';
 		  	}
 		  	else {
@@ -522,7 +522,7 @@ function sendDM(id, url, type, username, status) {
 	    {
 		  	var resp = xmlhttp.responseText.trim();
 		  	if (resp == 'notset') {
-		  		alert('Please review your Kaskus and Twitter settings');
+		  		settingsAlert();
 		  		document.getElementById('myModal12').style.display = 'none';
 		  	}
 		  	else {
@@ -551,7 +551,7 @@ function sendRetweet(postUrl, id, url, type, username, status) {
 	    {
 		  var resp = xmlhttp.responseText.trim();
 		  if (resp == 'notset') {
-		  		alert('Please review your Kaskus and Twitter settings');
+			  	settingsAlert();
 		  		document.getElementById('myModal12').style.display = 'none';
 		  	}
 		  else {
