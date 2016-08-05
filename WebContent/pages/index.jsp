@@ -220,7 +220,16 @@ org.json.JSONObject
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
-              
+              	 <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+						Help <i class="icon-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+						<li>
+							<a data-toggle="modal" data-target="#aboutModal">About</a>
+                        </li>
+                    </ul>
+                </li>
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
@@ -1205,6 +1214,58 @@ org.json.JSONObject
             
 				<!-- test -->
 			</div>
+			<div id="aboutModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">About Mata Analytics Dashboard</h4>
+				</div>
+				<div class="modal-body">
+					<p>
+						<table>
+							<tr>
+								<th>
+									<img src="images/mata_analytics_150w.png">
+								</th>
+								<th style="padding-left:10px">
+									<h5><b>Mata Analytics Dashboard v1.5</b><br/>
+										Bahasa Indonesia Language Pack / BILP v1.0.0.14<br/>
+										Banana v1.5.0
+									</h5>
+								</th>
+							</tr>
+						</table>
+					</p>
+					
+					<p style="text-align: justify">
+						Mata Analytics Admin Console is centralized user interface used for social media data and process management. Data collected will be nicely organized in collections, ensuring focus and accurate context for your analysis. 
+					</p>
+					
+					<p style="text-align: justify">
+						Mata Analytics Admin Console is part of Mata Analytics solution. Mata Analytics brings insights from unstructured information of social media and turns valuable information into actionable items. Powered by unique capability of natural language processing in Bahasa Indonesia, you can now use social media data in ways that were only previously attainable from your structured data.
+					</p>
+					
+					<p style="text-align: justify">
+						For more info please visit our website at <a href="http://www.mataprima.com/#max" target="_blank" style="color:#333"><i>http://www.mataprima.com/#max</i></a><br/>
+						or send email to <a href="mailto:support@mataprima.com" style="color:#333"><i>support@mataprima.com</i></a>
+					</p>
+					
+					<p style="text-align: justify">
+						Copyright &copy; 2016 </br> PT. Mata Prima Universal.
+					</p>
+					
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+			</div>
+		</div>
 			<footer>
 				<div style="display:block;position:fixed; width:100%; height:25px;bottom:0; background: #45484d; /* Old browsers */
 background: -moz-linear-gradient(top,  #45484d 0%, #000000 100%); /* FF3.6+ */
