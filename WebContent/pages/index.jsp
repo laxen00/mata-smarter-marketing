@@ -52,7 +52,7 @@ org.json.JSONObject
     <title>Mata Smarter Marketing Portal</title>
 
     <!-- Bootstrap Core CSS -->
-<!--     <link rel="icon" type="image/png" href="../images/ticon.png" /> -->
+    <link rel="icon" type="image/png" href="../images/mata-small.png" />
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../bower_components/bootstrap/dist/css/spinner.css" rel="stylesheet">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
