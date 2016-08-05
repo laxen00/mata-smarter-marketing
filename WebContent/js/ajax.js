@@ -478,7 +478,7 @@ function getDM(id, url, type, username, status) {
 }
 
 function sendReply(id, url, type, username, status) {
-	document.getElementById('conversation').innerHTML = "";
+//	document.getElementById('conversation').innerHTML = "";
 	document.getElementById('myModal12').style.display = 'inline';
 	var mediaPath = document.getElementById('mediaPath').value;
 	var text = '';
@@ -489,11 +489,17 @@ function sendReply(id, url, type, username, status) {
 	xmlhttp.onreadystatechange=function() {
 	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 	    {
-		  	document.getElementById('conversation').innerHTML = '';
-		    url = decodeURIComponent(url);
-		  	setTimeout(getConversation2(id, url, type, username, status), 1000);
-//		  	document.getElementById('myModal12').style.display = 'none';
-			
+		  	var resp = xmlhttp.responseText.trim();
+		  	if (resp == 'notset') {
+		  		settingsAlert();
+		  		document.getElementById('myModal12').style.display = 'none';
+		  	}
+		  	else {
+			  	document.getElementById('conversation').innerHTML = '';
+			    url = decodeURIComponent(url);
+			  	setTimeout(getConversation2(id, url, type, username, status), 1000);
+//			  	document.getElementById('myModal12').style.display = 'none';
+		  	}
 	    }
 	}
 //	xmlhttp.open("GET","../api/sendReply.jsp?url="+url+"&type="+type+"&username="+username+"&id="+id+"&text="+text,true);
@@ -504,7 +510,7 @@ function sendReply(id, url, type, username, status) {
 }
 
 function sendDM(id, url, type, username, status) {
-	document.getElementById('conversation').innerHTML = "";
+//	document.getElementById('conversation').innerHTML = "";
 	document.getElementById('myModal12').style.display = 'inline';
 	var text = '';
 	if (type == 'Twitter' || type == 'twitter') text = document.getElementById("btn-input2").value;
@@ -513,15 +519,21 @@ function sendDM(id, url, type, username, status) {
 	var xmlhttp=new XMLHttpRequest();
 	xmlhttp.onreadystatechange=function() {
 	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-	    {	
-		  	if (xmlhttp.responseText == false || xmlhttp.responseText == 'false') {
-		  		alert("Error in sending DM; is the user currently following you?");
+	    {
+		  	var resp = xmlhttp.responseText.trim();
+		  	if (resp == 'notset') {
+		  		settingsAlert();
+		  		document.getElementById('myModal12').style.display = 'none';
 		  	}
-		  	document.getElementById('conversation').innerHTML = '';
-		    url = decodeURIComponent(url);
-		  	setTimeout(getConversation(id, url, type, username, status), 1000);
-//		  	document.getElementById('myModal12').style.display = 'none';
-			
+		  	else {
+			  	if (xmlhttp.responseText == false || xmlhttp.responseText == 'false') {
+			  		alert("Error in sending DM; is the user currently following you?");
+			  	}
+			  	document.getElementById('conversation').innerHTML = '';
+			    url = decodeURIComponent(url);
+			  	setTimeout(getConversation(id, url, type, username, status), 1000);
+//			  	document.getElementById('myModal12').style.display = 'none';
+		  	}
 	    }
 	}
 //	xmlhttp.open("GET","../api/sendReply.jsp?url="+url+"&type="+type+"&username="+username+"&id="+id+"&text="+text,true);
@@ -537,9 +549,16 @@ function sendRetweet(postUrl, id, url, type, username, status) {
 	xmlhttp.onreadystatechange=function() {
 	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 	    {
-		  document.getElementById('conversation').innerHTML = '';
-		  url = decodeURIComponent(url);
-		  setTimeout(getConversation(id, url, type, username, status), 1000);
+		  var resp = xmlhttp.responseText.trim();
+		  if (resp == 'notset') {
+			  	settingsAlert();
+		  		document.getElementById('myModal12').style.display = 'none';
+		  	}
+		  else {
+			  document.getElementById('conversation').innerHTML = '';
+			  url = decodeURIComponent(url);
+			  setTimeout(getConversation(id, url, type, username, status), 1000);
+		  }
 	    }
 	}
 	xmlhttp.open("POST","../api/sendRetweet.jsp",true);

@@ -14,13 +14,28 @@ java.net.URLDecoder
 	String type = request.getParameter("type");
 	String text = request.getParameter("text");
 	JSONObject user = new JSONObject(session.getAttribute("userDetail").toString());
-	boolean dm = false; 
-	try {
-		dm = DataClass.sendDM(id, type, url, text, user);
+	
+	
+	String dmString = "";
+
+	if (user.getString("kaskusUser").equalsIgnoreCase("N/A")
+	||	user.getString("kaskusPass").equalsIgnoreCase("N/A")
+	||	user.getString("consumerKey").equalsIgnoreCase("N/A")
+	||	user.getString("consumerSecret").equalsIgnoreCase("N/A")
+	||	user.getString("oauthToken").equalsIgnoreCase("N/A")
+	||	user.getString("oauthSecret").equalsIgnoreCase("N/A")) {
+		dmString = "notset";
 	}
-	catch (Exception e) {
-		
+	else {
+		boolean dm = false; 
+		try {
+			dm = DataClass.sendDM(id, type, url, text, user);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		dmString = Boolean.toString(dm);
 	}
-	System.out.println("Reply DM : " + dm);
-	out.print(dm);
+	System.out.println("Reply DM : " + dmString);
+	out.print(dmString);
 %>

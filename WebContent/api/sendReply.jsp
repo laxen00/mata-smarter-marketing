@@ -7,6 +7,7 @@ org.json.JSONObject,
 org.apache.commons.lang3.StringEscapeUtils,
 java.net.URLDecoder
 " %>
+
 <%
 	String url = request.getParameter("url");
 	String type = request.getParameter("type");
@@ -24,13 +25,27 @@ java.net.URLDecoder
 // 	System.out.println(id);
 // 	System.out.println(username);
 // 	System.out.println(text);
-	boolean reply = false; 
-	try {
-		reply = DataClass.sendReply(url, type, id, user, text, mediaPath);
+	
+	String replyString = "";
+
+	if (user.getString("kaskusUser").equalsIgnoreCase("N/A")
+	||	user.getString("kaskusPass").equalsIgnoreCase("N/A")
+	||	user.getString("consumerKey").equalsIgnoreCase("N/A")
+	||	user.getString("consumerSecret").equalsIgnoreCase("N/A")
+	||	user.getString("oauthToken").equalsIgnoreCase("N/A")
+	||	user.getString("oauthSecret").equalsIgnoreCase("N/A")) {
+		replyString = "notset";
 	}
-	catch (Exception e) {
-		e.printStackTrace();
+	else {
+		boolean reply = false; 
+		try {
+			reply = DataClass.sendReply(url, type, id, user, text, mediaPath);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		replyString = Boolean.toString(reply);
 	}
-	System.out.println("Reply => " + reply);
-	out.print(reply);
+	System.out.println("Reply => " + replyString);
+	out.print(replyString);
 %>
